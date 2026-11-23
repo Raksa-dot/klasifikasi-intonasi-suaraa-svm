@@ -6,6 +6,7 @@ import pandas as pd
 import streamlit as st
 
 from src.audio_io import encode_wav_bytes, read_audio_bytes
+from src.comparison import summarize_attempt_comparison
 from src.config import A4_REFERENCE_HZ, DEFAULT_CENTS_TOLERANCE
 from src.exercises import load_exercises
 from src.features import compute_relative_semitones, summarize_singing_pitch
@@ -23,7 +24,11 @@ from src.ui_components import (
     save_attempt_to_session,
 )
 from src.validation import validate_raw_signal
-from src.visualization import create_pitch_contour_figure, create_waveform_figure
+from src.visualization import (
+    create_comparison_overlay_figure,
+    create_pitch_contour_figure,
+    create_waveform_figure,
+)
 
 st.set_page_config(page_title="Latihan Bernyanyi — Voice Analyzer", page_icon="🎙️", layout="wide")
 inject_custom_css()
@@ -272,3 +277,76 @@ if current and current.get("mode") == "SINGING":
                 time_offset_sec=current["preprocessed"].time_offset_sec,
             )
             st.plotly_chart(fig_wave)
+
+        # 03. Komparasi Langsung Percobaan Bernyanyi (Jika ada >= 2 percobaan pada nada target yang sama)
+        matching_attempts = [
+            a for a in st.session_state.get("attempts", [])
+            if a.get("mode") == "SINGING" and a.get("target") == current["target"]
+        ]
+        if len(matching_attempts) >= 2:
+            st.divider()
+            st.markdown("### 03. Komparasi Langsung dengan Percobaan Sebelumnya")
+            att_prev = matching_attempts[-2]
+            att_curr = matching_attempts[-1]
+
+            st.caption(
+                f"Membandingkan **{att_prev['attempt_id']}** ({att_prev['timestamp']}) dengan "
+                f"**{att_curr['attempt_id']}** ({att_curr['timestamp']}) pada nada target **{current['target']} ({target_hz:.2f} Hz)**."
+            )
+
+            fig_cmp = create_comparison_overlay_figure(
+                time_a=att_prev["contour"].timestamps,
+                val_a=att_prev["contour"].f0_hz,
+                label_a=f"{att_prev['attempt_id']} (Sebelumnya)",
+                time_b=att_curr["contour"].timestamps,
+                val_b=att_curr["contour"].f0_hz,
+                label_b=f"{att_curr['attempt_id']} (Terbaru)",
+                normalize_time=False,
+                y_label="Frekuensi Dasar / F0 (Hz)",
+                title=f"Perbandingan Kontur Pitch — {att_prev['attempt_id']} vs {att_curr['attempt_id']} (Target: {current['target']} — {target_hz:.2f} Hz)",
+                target_line_y=target_hz,
+                target_line_label=f"Target {current['target']} ({target_hz:.2f} Hz)",
+            )
+            st.plotly_chart(fig_cmp)
+
+            sum_prev = att_prev["summary"]
+            sum_curr = att_curr["summary"]
+            cmp_df = pd.DataFrame(
+                [
+                    {
+                        "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Bertanda (cents)",
+                        att_prev["attempt_id"]: f"{sum_prev['median_signed_cents_error']:+.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr['median_signed_cents_error']:+.1f} cents",
+                    },
+                    {
+                        "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Absolut (|cents|)",
+                        att_prev["attempt_id"]: f"{sum_prev['median_abs_cents_error']:.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr['median_abs_cents_error']:.1f} cents",
+                    },
+                    {
+                        "Aspek Penilaian Terpisah": "Kestabilan: Variasi MAD Segmen Inti (cents)",
+                        att_prev["attempt_id"]: f"{sum_prev['stability_mad_cents']:.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr['stability_mad_cents']:.1f} cents",
+                    },
+                    {
+                        "Aspek Penilaian Terpisah": f"Proporsi Frame dalam Toleransi (±{sum_curr['tolerance_cents']:.0f} c)",
+                        att_prev["attempt_id"]: f"{sum_prev['in_tolerance_ratio']*100:.1f}%",
+                        att_curr["attempt_id"]: f"{sum_curr['in_tolerance_ratio']*100:.1f}%",
+                    },
+                    {
+                        "Aspek Penilaian Terpisah": "Cakupan Data Valid (Voiced)",
+                        att_prev["attempt_id"]: f"{sum_prev['voiced_duration_sec']:.2f} dtk ({sum_prev['voiced_ratio']*100:.1f}%)",
+                        att_curr["attempt_id"]: f"{sum_curr['voiced_duration_sec']:.2f} dtk ({sum_curr['voiced_ratio']*100:.1f}%)",
+                    },
+                ]
+            )
+            st.table(cmp_df)
+
+            st.markdown("#### Ringkasan Perubahan:")
+            for note in summarize_attempt_comparison(att_prev, att_curr):
+                st.markdown(f"- {note}")
+        elif len(matching_attempts) == 1:
+            st.info(
+                f"💡 **Tips Komparasi Langsung:** Rekaman pertama Anda tersimpan sebagai **{matching_attempts[0]['attempt_id']}**. "
+                f"Tekan **Ulangi Nada Ini** atau **Rekam Ulang** dan rekam percobaan kedua pada nada {current['target']} untuk melihat grafik overlay perbandingan langsung di halaman ini!"
+            )
