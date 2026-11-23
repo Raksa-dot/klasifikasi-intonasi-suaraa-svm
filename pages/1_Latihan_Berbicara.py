@@ -184,28 +184,30 @@ if current and current.get("mode") == "SPEAKING":
     else:
         # 4 Ringkasan KPI Intonasi
         k1, k2, k3, k4 = st.columns(4)
+        diff_st = float(summary.get("start_end_diff_semitones", 0.0))
+        diff_hz = float(summary.get("start_end_diff_hz", 0.0))
         k1.metric(
             "Perubahan Akhir - Awal",
-            f"{summary['start_end_diff_semitones']:+.2f} ST",
-            f"{summary['start_end_diff_hz']:+.1f} Hz",
+            f"{diff_st:+.2f} ST",
+            f"{diff_hz:+.1f} Hz",
             delta_color="off",
         )
         k2.metric(
             "Rentang Pitch Valid",
-            f"{summary['pitch_range_semitones']:.2f} ST",
-            f"{summary['min_f0_hz']:.0f} – {summary['max_f0_hz']:.0f} Hz",
+            f"{summary.get('pitch_range_semitones', 0.0):.2f} ST",
+            f"{summary.get('min_f0_hz', 0.0):.0f} – {summary.get('max_f0_hz', 0.0):.0f} Hz",
             delta_color="off",
         )
         k3.metric(
             "Median Pitch",
-            f"{summary['median_f0_hz']:.1f} Hz",
-            f"Notasi {summary['median_note']}",
+            f"{summary.get('median_f0_hz', 0.0):.1f} Hz",
+            f"Notasi {summary.get('median_note', '—')}",
             delta_color="off",
         )
         k4.metric(
             "Cakupan Frame Voiced",
-            f"{summary['voiced_ratio']*100:.1f}%",
-            f"{summary['voiced_duration_sec']:.2f} detik",
+            f"{summary.get('voiced_ratio', 0.0)*100:.1f}%",
+            f"{summary.get('voiced_duration_sec', 0.0):.2f} detik",
             delta_color="off",
         )
 
@@ -330,34 +332,34 @@ if current and current.get("mode") == "SPEAKING":
             )
             st.plotly_chart(fig_cmp)
 
-            sum_prev = att_prev["summary"]
-            sum_curr = att_curr["summary"]
+            sum_prev = att_prev.get("summary", {})
+            sum_curr = att_curr.get("summary", {})
             cmp_df = pd.DataFrame(
                 [
                     {
                         "Metrik Pengukuran": "Perubahan Pitch Akhir–Awal (ST)",
-                        att_prev["attempt_id"]: f"{sum_prev['start_end_diff_semitones']:+.2f} ST",
-                        att_curr["attempt_id"]: f"{sum_curr['start_end_diff_semitones']:+.2f} ST",
+                        att_prev["attempt_id"]: f"{sum_prev.get('start_end_diff_semitones', 0.0):+.2f} ST",
+                        att_curr["attempt_id"]: f"{sum_curr.get('start_end_diff_semitones', 0.0):+.2f} ST",
                     },
                     {
                         "Metrik Pengukuran": "Rentang Pitch Valid (ST)",
-                        att_prev["attempt_id"]: f"{sum_prev['pitch_range_semitones']:.2f} ST",
-                        att_curr["attempt_id"]: f"{sum_curr['pitch_range_semitones']:.2f} ST",
+                        att_prev["attempt_id"]: f"{sum_prev.get('pitch_range_semitones', 0.0):.2f} ST",
+                        att_curr["attempt_id"]: f"{sum_curr.get('pitch_range_semitones', 0.0):.2f} ST",
                     },
                     {
                         "Metrik Pengukuran": "Kemiringan Kontur (ST/detik)",
-                        att_prev["attempt_id"]: f"{sum_prev['slope_semitones_per_sec']:+.2f}",
-                        att_curr["attempt_id"]: f"{sum_curr['slope_semitones_per_sec']:+.2f}",
+                        att_prev["attempt_id"]: f"{sum_prev.get('slope_semitones_per_sec', 0.0):+.2f}",
+                        att_curr["attempt_id"]: f"{sum_curr.get('slope_semitones_per_sec', 0.0):+.2f}",
                     },
                     {
                         "Metrik Pengukuran": "Median F0 (Hz)",
-                        att_prev["attempt_id"]: f"{sum_prev['median_f0_hz']:.1f} Hz ({sum_prev['median_note']})",
-                        att_curr["attempt_id"]: f"{sum_curr['median_f0_hz']:.1f} Hz ({sum_curr['median_note']})",
+                        att_prev["attempt_id"]: f"{sum_prev.get('median_f0_hz', 0.0):.1f} Hz ({sum_prev.get('median_note', '—')})",
+                        att_curr["attempt_id"]: f"{sum_curr.get('median_f0_hz', 0.0):.1f} Hz ({sum_curr.get('median_note', '—')})",
                     },
                     {
                         "Metrik Pengukuran": "Cakupan Suara Voiced (%)",
-                        att_prev["attempt_id"]: f"{sum_prev['voiced_ratio']*100:.1f}% ({sum_prev['voiced_duration_sec']:.2f} dtk)",
-                        att_curr["attempt_id"]: f"{sum_curr['voiced_ratio']*100:.1f}% ({sum_curr['voiced_duration_sec']:.2f} dtk)",
+                        att_prev["attempt_id"]: f"{sum_prev.get('voiced_ratio', 0.0)*100:.1f}% ({sum_prev.get('voiced_duration_sec', 0.0):.2f} dtk)",
+                        att_curr["attempt_id"]: f"{sum_curr.get('voiced_ratio', 0.0)*100:.1f}% ({sum_curr.get('voiced_duration_sec', 0.0):.2f} dtk)",
                     },
                     {
                         "Metrik Pengukuran": "Hasil Klasifikasi SVM",

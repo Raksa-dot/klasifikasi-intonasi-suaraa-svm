@@ -7,6 +7,7 @@ from src.features import (
     compute_relative_semitones,
     extract_intonation_feature_dict,
     summarize_singing_pitch,
+    summarize_speaking_pitch,
 )
 from src.pitch import PitchContour, extract_pitch_contour
 
@@ -56,3 +57,12 @@ def test_extract_pitch_on_synthetic_sine() -> None:
     feat = extract_intonation_feature_dict(contour)
     assert feat is not None
     assert len(feat) == 14
+
+    spk_summary = summarize_speaking_pitch(contour, duration_sec=1.5)
+    assert spk_summary is not None
+    assert "start_end_diff_hz" in spk_summary
+    assert "start_end_diff_semitones" in spk_summary
+    assert "pitch_range_semitones" in spk_summary
+    assert "median_f0_hz" in spk_summary
+    assert isinstance(spk_summary["start_end_diff_hz"], float)
+    assert isinstance(spk_summary["start_end_diff_semitones"], float)

@@ -309,34 +309,34 @@ if current and current.get("mode") == "SINGING":
             )
             st.plotly_chart(fig_cmp)
 
-            sum_prev = att_prev["summary"]
-            sum_curr = att_curr["summary"]
+            sum_prev = att_prev.get("summary", {})
+            sum_curr = att_curr.get("summary", {})
             cmp_df = pd.DataFrame(
                 [
                     {
                         "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Bertanda (cents)",
-                        att_prev["attempt_id"]: f"{sum_prev['median_signed_cents_error']:+.1f} cents",
-                        att_curr["attempt_id"]: f"{sum_curr['median_signed_cents_error']:+.1f} cents",
+                        att_prev["attempt_id"]: f"{sum_prev.get('median_signed_cents_error', 0.0):+.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr.get('median_signed_cents_error', 0.0):+.1f} cents",
                     },
                     {
                         "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Absolut (|cents|)",
-                        att_prev["attempt_id"]: f"{sum_prev['median_abs_cents_error']:.1f} cents",
-                        att_curr["attempt_id"]: f"{sum_curr['median_abs_cents_error']:.1f} cents",
+                        att_prev["attempt_id"]: f"{sum_prev.get('median_abs_cents_error', 0.0):.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr.get('median_abs_cents_error', 0.0):.1f} cents",
                     },
                     {
                         "Aspek Penilaian Terpisah": "Kestabilan: Variasi MAD Segmen Inti (cents)",
-                        att_prev["attempt_id"]: f"{sum_prev['stability_mad_cents']:.1f} cents",
-                        att_curr["attempt_id"]: f"{sum_curr['stability_mad_cents']:.1f} cents",
+                        att_prev["attempt_id"]: f"{sum_prev.get('stability_mad_cents', 0.0):.1f} cents",
+                        att_curr["attempt_id"]: f"{sum_curr.get('stability_mad_cents', 0.0):.1f} cents",
                     },
                     {
-                        "Aspek Penilaian Terpisah": f"Proporsi Frame dalam Toleransi (±{sum_curr['tolerance_cents']:.0f} c)",
-                        att_prev["attempt_id"]: f"{sum_prev['in_tolerance_ratio']*100:.1f}%",
-                        att_curr["attempt_id"]: f"{sum_curr['in_tolerance_ratio']*100:.1f}%",
+                        "Aspek Penilaian Terpisah": f"Proporsi Frame dalam Toleransi (±{sum_curr.get('tolerance_cents', 50.0):.0f} c)",
+                        att_prev["attempt_id"]: f"{sum_prev.get('in_tolerance_ratio', 0.0)*100:.1f}%",
+                        att_curr["attempt_id"]: f"{sum_curr.get('in_tolerance_ratio', 0.0)*100:.1f}%",
                     },
                     {
                         "Aspek Penilaian Terpisah": "Cakupan Data Valid (Voiced)",
-                        att_prev["attempt_id"]: f"{sum_prev['voiced_duration_sec']:.2f} dtk ({sum_prev['voiced_ratio']*100:.1f}%)",
-                        att_curr["attempt_id"]: f"{sum_curr['voiced_duration_sec']:.2f} dtk ({sum_curr['voiced_ratio']*100:.1f}%)",
+                        att_prev["attempt_id"]: f"{sum_prev.get('voiced_duration_sec', 0.0):.2f} dtk ({sum_prev.get('voiced_ratio', 0.0)*100:.1f}%)",
+                        att_curr["attempt_id"]: f"{sum_curr.get('voiced_duration_sec', 0.0):.2f} dtk ({sum_curr.get('voiced_ratio', 0.0)*100:.1f}%)",
                     },
                 ]
             )

@@ -113,6 +113,11 @@ def summarize_speaking_pitch(contour: PitchContour, duration_sec: Optional[float
     hop_sec = float(contour.hop_length / contour.sample_rate)
     voiced_duration_sec = float(n_valid * hop_sec)
 
+    third = max(1, n_valid // 3)
+    start_mean_hz = float(np.mean(valid_f0[:third]))
+    end_mean_hz = float(np.mean(valid_f0[-third:]))
+    start_end_diff_hz = float(end_mean_hz - start_mean_hz)
+
     summary: Dict[str, Any] = {
         "mean_f0_hz": float(np.mean(valid_f0)),
         "median_f0_hz": float(np.median(valid_f0)),
@@ -127,6 +132,7 @@ def summarize_speaking_pitch(contour: PitchContour, duration_sec: Optional[float
         "pitch_range_hz": float(np.max(valid_f0) - np.min(valid_f0)),
         "pitch_range_semitones": feature_dict["pitch_range_semitones"],
         "start_end_diff_semitones": feature_dict["end_minus_start_st"],
+        "start_end_diff_hz": start_end_diff_hz,
         "slope_semitones_per_sec": feature_dict["overall_slope_st_per_sec"],
         "duration_sec": float(duration_sec),
         "voiced_duration_sec": voiced_duration_sec,
