@@ -1,0 +1,280 @@
+[
+    {
+        "word": "<SP>",
+        "start_time": 0.0,
+        "end_time": 0.15,
+        "ph": [
+            "<SP>"
+        ],
+        "ph_start": [
+            0.0
+        ],
+        "ph_end": [
+            0.15
+        ]
+    },
+    {
+        "word": "i",
+        "start_time": 0.15,
+        "end_time": 0.28,
+        "ph": [
+            "AY1"
+        ],
+        "ph_start": [
+            0.15
+        ],
+        "ph_end": [
+            0.28
+        ]
+    },
+    {
+        "word": "will",
+        "start_time": 0.28,
+        "end_time": 0.42,
+        "ph": [
+            "W",
+            "AH0",
+            "L"
+        ],
+        "ph_start": [
+            0.28,
+            0.38,
+            0.39
+        ],
+        "ph_end": [
+            0.38,
+            0.39,
+            0.42
+        ]
+    },
+    {
+        "word": "leave",
+        "start_time": 0.42,
+        "end_time": 0.71,
+        "ph": [
+            "L",
+            "IY1",
+            "V"
+        ],
+        "ph_start": [
+            0.42,
+            0.57,
+            0.64
+        ],
+        "ph_end": [
+            0.57,
+            0.64,
+            0.71
+        ]
+    },
+    {
+        "word": "my",
+        "start_time": 0.71,
+        "end_time": 0.85,
+        "ph": [
+            "M",
+            "AY1"
+        ],
+        "ph_start": [
+            0.71,
+            0.81
+        ],
+        "ph_end": [
+            0.81,
+            0.85
+        ]
+    },
+    {
+        "word": "heart",
+        "start_time": 0.85,
+        "end_time": 1.24,
+        "ph": [
+            "HH",
+            "AA1",
+            "R",
+            "T"
+        ],
+        "ph_start": [
+            0.85,
+            1.03,
+            1.1,
+            1.14
+        ],
+        "ph_end": [
+            1.03,
+            1.1,
+            1.14,
+            1.24
+        ]
+    },
+    {
+        "word": "at",
+        "start_time": 1.24,
+        "end_time": 1.39,
+        "ph": [
+            "AE1",
+            "T"
+        ],
+        "ph_start": [
+            1.24,
+            1.35
+        ],
+        "ph_end": [
+            1.35,
+            1.39
+        ]
+    },
+    {
+        "word": "the",
+        "start_time": 1.39,
+        "end_time": 1.48,
+        "ph": [
+            "DH",
+            "AH0"
+        ],
+        "ph_start": [
+            1.39,
+            1.43
+        ],
+        "ph_end": [
+            1.43,
+            1.48
+        ]
+    },
+    {
+        "word": "door",
+        "start_time": 1.48,
+        "end_time": 2.02,
+        "ph": [
+            "D",
+            "AO1",
+            "R"
+        ],
+        "ph_start": [
+            1.48,
+            1.6,
+            1.81
+        ],
+        "ph_end": [
+            1.6,
+            1.81,
+            2.02
+        ]
+    },
+    {
+        "word": "<SP>",
+        "start_time": 2.02,
+        "end_time": 2.22,
+        "ph": [
+            "<SP>"
+        ],
+        "ph_start": [
+            2.02
+        ],
+        "ph_end": [
+            2.22
+        ]
+    },
+    {
+        "word": "i",
+        "start_time": 2.22,
+        "end_time": 2.29,
+        "ph": [
+            "AY1"
+        ],
+        "ph_start": [
+            2.22
+        ],
+        "ph_end": [
+            2.29
+        ]
+    },
+    {
+        "word": "won't",
+        "start_time": 2.29,
+        "end_time": 2.63,
+        "ph": [
+            "W",
+            "OW1",
+            "N",
+            "T"
+        ],
+        "ph_start": [
+            2.29,
+            2.44,
+            2.54,
+            2.58
+        ],
+        "ph_end": [
+            2.44,
+            2.54,
+            2.58,
+            2.63
+        ]
+    },
+    {
+        "word": "say",
+        "start_time": 2.63,
+        "end_time": 2.84,
+        "ph": [
+            "S",
+            "EY1"
+        ],
+        "ph_start": [
+            2.63,
+            2.77
+        ],
+        "ph_end": [
+            2.77,
+            2.84
+        ]
+    },
+    {
+        "word": "a",
+        "start_time": 2.84,
+        "end_time": 2.93,
+        "ph": [
+            "AH0"
+        ],
+        "ph_start": [
+            2.84
+        ],
+        "ph_end": [
+            2.93
+        ]
+    },
+    {
+        "word": "word",
+        "start_time": 2.93,
+        "end_time": 3.363,
+        "ph": [
+            "W",
+            "ER1",
+            "D"
+        ],
+        "ph_start": [
+            2.93,
+            3.2,
+            3.28
+        ],
+        "ph_end": [
+            3.2,
+            3.28,
+            3.363
+        ]
+    },
+    {
+        "word": "<SP>",
+        "start_time": 3.363,
+        "end_time": 3.893,
+        "ph": [
+            "<SP>"
+        ],
+        "ph_start": [
+            3.363
+        ],
+        "ph_end": [
+            3.893
+        ]
+    }
+]

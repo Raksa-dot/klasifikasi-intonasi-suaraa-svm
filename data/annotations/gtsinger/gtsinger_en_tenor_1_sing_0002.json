@@ -1,0 +1,997 @@
+[
+    {
+        "word": "just",
+        "start_time": 0.0,
+        "end_time": 0.25,
+        "ph": [
+            "JH",
+            "AH1",
+            "S",
+            "T"
+        ],
+        "ph_start": [
+            0.0,
+            0.06,
+            0.11,
+            0.16
+        ],
+        "ph_end": [
+            0.06,
+            0.11,
+            0.16,
+            0.25
+        ],
+        "note": [
+            62
+        ],
+        "note_dur": [
+            0.23256
+        ],
+        "note_start": [
+            0.0
+        ],
+        "note_end": [
+            0.25
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "play",
+        "start_time": 0.25,
+        "end_time": 0.951,
+        "ph": [
+            "P",
+            "L",
+            "EY1"
+        ],
+        "ph_start": [
+            0.25,
+            0.33,
+            0.37
+        ],
+        "ph_end": [
+            0.33,
+            0.37,
+            0.951
+        ],
+        "note": [
+            60,
+            61
+        ],
+        "note_dur": [
+            0.46512,
+            0.23256
+        ],
+        "note_start": [
+            0.25,
+            0.664
+        ],
+        "note_end": [
+            0.664,
+            0.951
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "1"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "6",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "pretend",
+        "start_time": 0.951,
+        "end_time": 2.431,
+        "ph": [
+            "P",
+            "R",
+            "IY0",
+            "T",
+            "EH1",
+            "N",
+            "D"
+        ],
+        "ph_start": [
+            0.951,
+            1.081,
+            1.131,
+            1.201,
+            1.351,
+            1.911,
+            2.311
+        ],
+        "ph_end": [
+            1.081,
+            1.131,
+            1.201,
+            1.351,
+            1.911,
+            2.311,
+            2.431
+        ],
+        "note": [
+            56,
+            57
+        ],
+        "note_dur": [
+            0.81395,
+            0.69767
+        ],
+        "note_start": [
+            0.951,
+            1.715
+        ],
+        "note_end": [
+            1.715,
+            2.431
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "1",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "6",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 2.431,
+        "end_time": 2.841,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            2.431
+        ],
+        "ph_end": [
+            2.841
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.46512
+        ],
+        "note_start": [
+            2.431
+        ],
+        "note_end": [
+            2.841
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "like",
+        "start_time": 2.841,
+        "end_time": 3.081,
+        "ph": [
+            "L",
+            "AY1",
+            "K"
+        ],
+        "ph_start": [
+            2.841,
+            2.891,
+            2.971
+        ],
+        "ph_end": [
+            2.891,
+            2.971,
+            3.081
+        ],
+        "note": [
+            52
+        ],
+        "note_dur": [
+            0.23256
+        ],
+        "note_start": [
+            2.841
+        ],
+        "note_end": [
+            3.081
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "we're",
+        "start_time": 3.081,
+        "end_time": 3.26,
+        "ph": [
+            "W",
+            "IH1",
+            "R"
+        ],
+        "ph_start": [
+            3.081,
+            3.121,
+            3.201
+        ],
+        "ph_end": [
+            3.121,
+            3.201,
+            3.26
+        ],
+        "note": [
+            53
+        ],
+        "note_dur": [
+            0.23256
+        ],
+        "note_start": [
+            3.081
+        ],
+        "note_end": [
+            3.26
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "not",
+        "start_time": 3.26,
+        "end_time": 3.411,
+        "ph": [
+            "N",
+            "AA1",
+            "T"
+        ],
+        "ph_start": [
+            3.26,
+            3.321,
+            3.361
+        ],
+        "ph_end": [
+            3.321,
+            3.361,
+            3.411
+        ],
+        "note": [
+            56
+        ],
+        "note_dur": [
+            0.11628
+        ],
+        "note_start": [
+            3.26
+        ],
+        "note_end": [
+            3.411
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "scared",
+        "start_time": 3.411,
+        "end_time": 4.173,
+        "ph": [
+            "S",
+            "K",
+            "EH1",
+            "R",
+            "D"
+        ],
+        "ph_start": [
+            3.411,
+            3.471,
+            3.571,
+            3.874,
+            4.111
+        ],
+        "ph_end": [
+            3.471,
+            3.571,
+            3.874,
+            4.111,
+            4.173
+        ],
+        "note": [
+            56
+        ],
+        "note_dur": [
+            0.81395
+        ],
+        "note_start": [
+            3.411
+        ],
+        "note_end": [
+            4.173
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "of",
+        "start_time": 4.173,
+        "end_time": 4.312,
+        "ph": [
+            "AH1",
+            "V"
+        ],
+        "ph_start": [
+            4.173,
+            4.26
+        ],
+        "ph_end": [
+            4.26,
+            4.312
+        ],
+        "note": [
+            54
+        ],
+        "note_dur": [
+            0.11628
+        ],
+        "note_start": [
+            4.173
+        ],
+        "note_end": [
+            4.312
+        ],
+        "mix": [
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "what",
+        "start_time": 4.312,
+        "end_time": 5.163,
+        "ph": [
+            "W",
+            "AH1",
+            "T"
+        ],
+        "ph_start": [
+            4.312,
+            4.483,
+            5.113
+        ],
+        "ph_end": [
+            4.483,
+            5.113,
+            5.163
+        ],
+        "note": [
+            54
+        ],
+        "note_dur": [
+            0.81395
+        ],
+        "note_start": [
+            4.312
+        ],
+        "note_end": [
+            5.163
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "is",
+        "start_time": 5.163,
+        "end_time": 5.313,
+        "ph": [
+            "IH1",
+            "Z"
+        ],
+        "ph_start": [
+            5.163,
+            5.233
+        ],
+        "ph_end": [
+            5.233,
+            5.313
+        ],
+        "note": [
+            54
+        ],
+        "note_dur": [
+            0.11628
+        ],
+        "note_start": [
+            5.163
+        ],
+        "note_end": [
+            5.313
+        ],
+        "mix": [
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "coming",
+        "start_time": 5.313,
+        "end_time": 5.823,
+        "ph": [
+            "K",
+            "AH1",
+            "M",
+            "IH0",
+            "NG"
+        ],
+        "ph_start": [
+            5.313,
+            5.423,
+            5.583,
+            5.643,
+            5.703
+        ],
+        "ph_end": [
+            5.423,
+            5.583,
+            5.643,
+            5.703,
+            5.823
+        ],
+        "note": [
+            54,
+            53
+        ],
+        "note_dur": [
+            0.34884,
+            0.23256
+        ],
+        "note_start": [
+            5.313,
+            5.643
+        ],
+        "note_end": [
+            5.643,
+            5.823
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "1",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "6",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "next",
+        "start_time": 5.823,
+        "end_time": 6.313,
+        "ph": [
+            "N",
+            "EH1",
+            "K",
+            "S",
+            "T"
+        ],
+        "ph_start": [
+            5.823,
+            5.873,
+            6.113,
+            6.233,
+            6.283
+        ],
+        "ph_end": [
+            5.873,
+            6.113,
+            6.233,
+            6.283,
+            6.313
+        ],
+        "note": [
+            51
+        ],
+        "note_dur": [
+            0.46512
+        ],
+        "note_start": [
+            5.823
+        ],
+        "note_end": [
+            6.313
+        ],
+        "mix": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 6.313,
+        "end_time": 6.743,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            6.313
+        ],
+        "ph_end": [
+            6.743
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.46512
+        ],
+        "note_start": [
+            6.313
+        ],
+        "note_end": [
+            6.743
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "fast",
+        "range": "medium",
+        "emotion": "happy"
+    }
+]

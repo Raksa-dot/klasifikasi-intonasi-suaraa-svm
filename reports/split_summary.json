@@ -1,0 +1,21 @@
+{
+  "total_samples": 328,
+  "total_unique_speakers": 46,
+  "zero_speaker_leakage_verified": true,
+  "samples_per_split": {
+    "test": 70,
+    "train": 186,
+    "val": 72
+  },
+  "speakers_per_split": {
+    "train": 30,
+    "val": 8,
+    "test": 8
+  },
+  "samples_per_dataset": {
+    "PTDB-TUG": 50,
+    "CommonVoice-Scripted-ID": 220,
+    "VocalSet+Annotated-VocalSet": 38,
+    "GTSinger": 20
+  }
+}

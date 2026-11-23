@@ -1,0 +1,68 @@
+{
+  "model_version": "intonation-svm-v1.0",
+  "task": "speech_phrase_intonation_classification",
+  "pipeline_description": "StandardScaler -> SVC(kernel='rbf', class_weight='balanced')",
+  "best_hyperparameters": {
+    "svm__C": 10.0,
+    "svm__gamma": 0.05
+  },
+  "cv_macro_f1": 0.8298,
+  "labels": [
+    "RISING",
+    "FALLING",
+    "LEVEL",
+    "FALL_RISE",
+    "RISE_FALL"
+  ],
+  "feature_names": [
+    "pitch_range_semitones",
+    "std_semitones",
+    "iqr_semitones",
+    "p90_minus_p10_semitones",
+    "overall_slope_st_per_sec",
+    "overall_slope_st_normalized",
+    "start_mean_st",
+    "mid_mean_st",
+    "end_mean_st",
+    "end_minus_start_st",
+    "mid_minus_start_st",
+    "end_minus_mid_st",
+    "poly2_curvature",
+    "peak_minus_valley_pos"
+  ],
+  "extractor_version": "f0-pyin-v1.0",
+  "audio_parameters": {
+    "internal_sample_rate_hz": 22050,
+    "frame_length": 2048,
+    "hop_length": 256,
+    "speech_fmin_hz": 65.0,
+    "speech_fmax_hz": 550.0
+  },
+  "environment_versions": {
+    "python": "3.14.5",
+    "scikit_learn": "1.9.1",
+    "librosa": "1.0.1",
+    "numpy": "2.5.5"
+  },
+  "dataset_summary": {
+    "sources": [
+      "CommonVoice-Scripted-ID (v22.0)",
+      "PTDB-TUG (v1.0)",
+      "GTSinger Paired Speech (v1.0)"
+    ],
+    "annotation_source": "AUTOMATIC_PROSODIC_CONTOUR_VALIDATED",
+    "split_method": "Speaker-Independent Split + 5-Fold StratifiedGroupKFold",
+    "train_val_samples": 440,
+    "train_val_speakers": 27,
+    "test_samples": 90,
+    "test_speakers": 5,
+    "class_counts_total": {
+      "FALLING": 305,
+      "RISING": 55,
+      "RISE_FALL": 83,
+      "FALL_RISE": 59,
+      "LEVEL": 28
+    }
+  },
+  "trained_at_utc": "2026-11-23T19:38:14Z"
+}

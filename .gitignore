@@ -1,0 +1,33 @@
+# Virtual environment & Python cache
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+scratch/
+
+# Raw dataset audio, processed audio, and temporary user uploads (see AGENTS.md Section 4.5 & 11)
+data/raw/speech/*
+!data/raw/speech/.gitkeep
+data/raw/singing/*
+!data/raw/singing/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/features/*
+!data/features/.gitkeep
+!data/features/intonation_features.csv
+tmp/
+temp/
+*.tmp
+*.wav
+*.mp3
+*.flac
+*.m4a
+
+# OS & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

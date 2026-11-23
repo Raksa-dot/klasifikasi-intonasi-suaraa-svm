@@ -1,0 +1,39 @@
+{
+  "extractor_version": "f0-pyin-v1.0",
+  "feature_file": "data/features/intonation_features.csv",
+  "total_valid_consensus_phrases": 530,
+  "unique_speakers": 32,
+  "ambiguous_excluded_count": 160,
+  "insufficient_voiced_excluded_count": 4,
+  "inter_annotator_raw_agreement_pct": 77.94,
+  "inter_annotator_cohens_kappa": 0.6705,
+  "annotation_source": "AUTOMATIC_PROSODIC_CONTOUR_VALIDATED",
+  "class_distribution": {
+    "FALLING": 305,
+    "RISING": 55,
+    "RISE_FALL": 83,
+    "FALL_RISE": 59,
+    "LEVEL": 28
+  },
+  "split_distribution": {
+    "test": 90,
+    "train": 290,
+    "val": 150
+  },
+  "feature_names": [
+    "pitch_range_semitones",
+    "std_semitones",
+    "iqr_semitones",
+    "p90_minus_p10_semitones",
+    "overall_slope_st_per_sec",
+    "overall_slope_st_normalized",
+    "start_mean_st",
+    "mid_mean_st",
+    "end_mean_st",
+    "end_minus_start_st",
+    "mid_minus_start_st",
+    "end_minus_mid_st",
+    "poly2_curvature",
+    "peak_minus_valley_pos"
+  ]
+}

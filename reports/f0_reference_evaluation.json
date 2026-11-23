@@ -1,0 +1,8 @@
+{
+  "reference_dataset": "PTDB-TUG (Laryngograph RAPT Reference)",
+  "extractor_version": "f0-pyin-v1.0",
+  "evaluated_clips": 25,
+  "mean_gross_pitch_error_pct": 35.09,
+  "median_fine_pitch_error_cents": 24.65,
+  "mean_voicing_decision_error_pct": 36.9
+}

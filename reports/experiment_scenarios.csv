@@ -1,0 +1,7 @@
+scenario_name,description,hyperparameters,train_macro_f1,cv_macro_f1,test_macro_f1,test_balanced_accuracy,test_accuracy,train_accuracy,train_test_f1_gap,fit_diagnosis
+Baseline-1: Dummy Stratified,Prediksi acak proporsional distribusi kelas,strategy='stratified',0.1933,0.2,0.1663,0.1568,0.4778,0.3705,0.027,Underfitting (kapasitas model terlalu sederhana)
+Baseline-2: Aturan Slope Sederhana,Heuristik statis selisih semitone akhir-awal tanpa pembelajaran,threshold=±1.0 ST,0.9397,0.9397,0.9596,0.9667,0.9889,0.9636,-0.0199,Good Fit / Generalisasi Baik pada Pembicara Baru
+Skenario-3: SVM Kernel Linear,"StandardScaler + SVC(kernel='linear', class_weight='balanced')","{""svm__C"": 2.0}",0.9482,0.8367,0.7672,0.8033,0.9444,0.9659,0.181,Indikasi Overfitting Ringan (selisih train-test > 0.18)
+Skenario-4: SVM Kernel Polynomial,"StandardScaler + SVC(kernel='poly', degree=2, class_weight='balanced')","{""svm__C"": 2.0, ""svm__gamma"": ""scale""}",0.7749,0.6457,0.5574,0.6544,0.8111,0.8341,0.2175,Indikasi Overfitting Ringan (selisih train-test > 0.18)
+Skenario-5: SVM RBF + PCA (95% Varians),"StandardScaler + PCA(0.95) + SVC(kernel='rbf', class_weight='balanced')","{""svm__C"": 10.0, ""svm__gamma"": 0.05}",0.9388,0.832,0.8359,0.9035,0.9444,0.9568,0.1029,Good Fit / Generalisasi Baik pada Pembicara Baru
+Skenario-6: SVM RBF (14 Fitur F0 + GridSearchCV),"Pipeline utama StandardScaler + SVC(kernel='rbf', class_weight='balanced')","{""svm__C"": 10.0, ""svm__gamma"": 0.05}",0.9453,0.8298,0.823,0.8837,0.9333,0.9636,0.1223,Good Fit / Generalisasi Baik pada Pembicara Baru

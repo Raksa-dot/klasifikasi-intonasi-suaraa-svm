@@ -1,0 +1,1057 @@
+[
+    {
+        "word": "how",
+        "start_time": 0.0,
+        "end_time": 0.44,
+        "ph": [
+            "HH",
+            "AW1"
+        ],
+        "ph_start": [
+            0.0,
+            0.09
+        ],
+        "ph_end": [
+            0.09,
+            0.44
+        ],
+        "note": [
+            63,
+            65
+        ],
+        "note_dur": [
+            0.15789,
+            0.15789
+        ],
+        "note_start": [
+            0.0,
+            0.213
+        ],
+        "note_end": [
+            0.213,
+            0.44
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "1"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "to",
+        "start_time": 0.44,
+        "end_time": 0.71,
+        "ph": [
+            "T",
+            "UW1"
+        ],
+        "ph_start": [
+            0.44,
+            0.56
+        ],
+        "ph_end": [
+            0.56,
+            0.71
+        ],
+        "note": [
+            63
+        ],
+        "note_dur": [
+            0.31579
+        ],
+        "note_start": [
+            0.44
+        ],
+        "note_end": [
+            0.71
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "be",
+        "start_time": 0.71,
+        "end_time": 1.21,
+        "ph": [
+            "B",
+            "IY1"
+        ],
+        "ph_start": [
+            0.71,
+            0.78
+        ],
+        "ph_end": [
+            0.78,
+            1.21
+        ],
+        "note": [
+            62
+        ],
+        "note_dur": [
+            0.47368
+        ],
+        "note_start": [
+            0.71
+        ],
+        "note_end": [
+            1.21
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "brave",
+        "start_time": 1.21,
+        "end_time": 2.22,
+        "ph": [
+            "B",
+            "R",
+            "EY1",
+            "V"
+        ],
+        "ph_start": [
+            1.21,
+            1.27,
+            1.47,
+            2.107
+        ],
+        "ph_end": [
+            1.27,
+            1.47,
+            2.107,
+            2.22
+        ],
+        "note": [
+            58,
+            55
+        ],
+        "note_dur": [
+            0.47368,
+            0.63158
+        ],
+        "note_start": [
+            1.21,
+            1.664
+        ],
+        "note_end": [
+            1.664,
+            2.22
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "1",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 2.22,
+        "end_time": 2.68,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            2.22
+        ],
+        "ph_end": [
+            2.68
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.47368
+        ],
+        "note_start": [
+            2.22
+        ],
+        "note_end": [
+            2.68
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "how",
+        "start_time": 2.68,
+        "end_time": 3.06,
+        "ph": [
+            "HH",
+            "AW1"
+        ],
+        "ph_start": [
+            2.68,
+            2.77
+        ],
+        "ph_end": [
+            2.77,
+            3.06
+        ],
+        "note": [
+            64,
+            65
+        ],
+        "note_dur": [
+            0.15789,
+            0.15789
+        ],
+        "note_start": [
+            2.68,
+            2.88
+        ],
+        "note_end": [
+            2.88,
+            3.06
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "1"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "can",
+        "start_time": 3.06,
+        "end_time": 3.335,
+        "ph": [
+            "K",
+            "AE1",
+            "N"
+        ],
+        "ph_start": [
+            3.06,
+            3.17,
+            3.264
+        ],
+        "ph_end": [
+            3.17,
+            3.264,
+            3.335
+        ],
+        "note": [
+            63
+        ],
+        "note_dur": [
+            0.31579
+        ],
+        "note_start": [
+            3.06
+        ],
+        "note_end": [
+            3.335
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "i",
+        "start_time": 3.335,
+        "end_time": 3.87,
+        "ph": [
+            "AY1"
+        ],
+        "ph_start": [
+            3.335
+        ],
+        "ph_end": [
+            3.87
+        ],
+        "note": [
+            61,
+            62
+        ],
+        "note_dur": [
+            0.31579,
+            0.31579
+        ],
+        "note_start": [
+            3.335,
+            3.616
+        ],
+        "note_end": [
+            3.616,
+            3.87
+        ],
+        "mix": [
+            "1"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "1"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "love",
+        "start_time": 3.87,
+        "end_time": 4.71,
+        "ph": [
+            "L",
+            "AH1",
+            "V"
+        ],
+        "ph_start": [
+            3.87,
+            4.02,
+            4.558
+        ],
+        "ph_end": [
+            4.02,
+            4.558,
+            4.71
+        ],
+        "note": [
+            60
+        ],
+        "note_dur": [
+            0.78947
+        ],
+        "note_start": [
+            3.87
+        ],
+        "note_end": [
+            4.71
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 4.71,
+        "end_time": 4.9,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            4.71
+        ],
+        "ph_end": [
+            4.9
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.15789
+        ],
+        "note_start": [
+            4.71
+        ],
+        "note_end": [
+            4.9
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "when",
+        "start_time": 4.9,
+        "end_time": 5.287,
+        "ph": [
+            "HH",
+            "W",
+            "IH1",
+            "N"
+        ],
+        "ph_start": [
+            4.9,
+            4.94,
+            4.97,
+            5.13
+        ],
+        "ph_end": [
+            4.94,
+            4.97,
+            5.13,
+            5.287
+        ],
+        "note": [
+            62,
+            60
+        ],
+        "note_dur": [
+            0.15789,
+            0.15789
+        ],
+        "note_start": [
+            4.9,
+            5.13
+        ],
+        "note_end": [
+            5.13,
+            5.287
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "1"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "i'm",
+        "start_time": 5.287,
+        "end_time": 6.401,
+        "ph": [
+            "AH0",
+            "M"
+        ],
+        "ph_start": [
+            5.287,
+            6.29
+        ],
+        "ph_end": [
+            6.29,
+            6.401
+        ],
+        "note": [
+            57,
+            58
+        ],
+        "note_dur": [
+            0.94737,
+            0.31579
+        ],
+        "note_start": [
+            5.287,
+            6.16
+        ],
+        "note_end": [
+            6.16,
+            6.401
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "1",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1,6",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "afraid",
+        "start_time": 6.401,
+        "end_time": 7.311,
+        "ph": [
+            "AH0",
+            "F",
+            "R",
+            "EY1",
+            "D"
+        ],
+        "ph_start": [
+            6.401,
+            6.484,
+            6.531,
+            6.631,
+            7.136
+        ],
+        "ph_end": [
+            6.484,
+            6.531,
+            6.631,
+            7.136,
+            7.311
+        ],
+        "note": [
+            58
+        ],
+        "note_dur": [
+            0.94737
+        ],
+        "note_start": [
+            6.401
+        ],
+        "note_end": [
+            7.311
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 7.311,
+        "end_time": 7.711,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            7.311
+        ],
+        "ph_end": [
+            7.711
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.47368
+        ],
+        "note_start": [
+            7.311
+        ],
+        "note_end": [
+            7.711
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "to",
+        "start_time": 7.711,
+        "end_time": 8.981,
+        "ph": [
+            "T",
+            "UW1"
+        ],
+        "ph_start": [
+            7.711,
+            7.851
+        ],
+        "ph_end": [
+            7.851,
+            8.981
+        ],
+        "note": [
+            58
+        ],
+        "note_dur": [
+            1.26316
+        ],
+        "note_start": [
+            7.711
+        ],
+        "note_end": [
+            8.981
+        ],
+        "mix": [
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "fall",
+        "start_time": 8.981,
+        "end_time": 9.701,
+        "ph": [
+            "F",
+            "AA1",
+            "L"
+        ],
+        "ph_start": [
+            8.981,
+            9.141,
+            9.501
+        ],
+        "ph_end": [
+            9.141,
+            9.501,
+            9.701
+        ],
+        "note": [
+            58
+        ],
+        "note_dur": [
+            0.78947
+        ],
+        "note_start": [
+            8.981
+        ],
+        "note_end": [
+            9.701
+        ],
+        "mix": [
+            "1",
+            "1",
+            "1"
+        ],
+        "falsetto": [
+            "0",
+            "0",
+            "0"
+        ],
+        "breathy": [
+            "0",
+            "0",
+            "0"
+        ],
+        "pharyngeal": [
+            "0",
+            "0",
+            "0"
+        ],
+        "glissando": [
+            "0",
+            "0",
+            "0"
+        ],
+        "vibrato": [
+            "0",
+            "0",
+            "0"
+        ],
+        "tech": "1",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    },
+    {
+        "word": "<AP>",
+        "start_time": 9.701,
+        "end_time": 10.181,
+        "ph": [
+            "<AP>"
+        ],
+        "ph_start": [
+            9.701
+        ],
+        "ph_end": [
+            10.181
+        ],
+        "note": [
+            0
+        ],
+        "note_dur": [
+            0.47368
+        ],
+        "note_start": [
+            9.701
+        ],
+        "note_end": [
+            10.181
+        ],
+        "mix": [
+            "0"
+        ],
+        "falsetto": [
+            "0"
+        ],
+        "breathy": [
+            "0"
+        ],
+        "pharyngeal": [
+            "0"
+        ],
+        "glissando": [
+            "0"
+        ],
+        "vibrato": [
+            "0"
+        ],
+        "tech": "0",
+        "singing_method": "pop",
+        "pace": "slow",
+        "range": "medium",
+        "emotion": "sad"
+    }
+]

@@ -1,0 +1,303 @@
+{
+  "model_version": "intonation-svm-v1.0",
+  "trained_at_utc": "2026-11-23T19:38:14Z",
+  "pipeline_description": "StandardScaler -> SVC(kernel='rbf', class_weight='balanced')",
+  "best_hyperparameters": {
+    "svm__C": 10.0,
+    "svm__gamma": 0.05
+  },
+  "extractor_version": "f0-pyin-v1.0",
+  "feature_names": [
+    "pitch_range_semitones",
+    "std_semitones",
+    "iqr_semitones",
+    "p90_minus_p10_semitones",
+    "overall_slope_st_per_sec",
+    "overall_slope_st_normalized",
+    "start_mean_st",
+    "mid_mean_st",
+    "end_mean_st",
+    "end_minus_start_st",
+    "mid_minus_start_st",
+    "end_minus_mid_st",
+    "poly2_curvature",
+    "peak_minus_valley_pos"
+  ],
+  "labels": [
+    "RISING",
+    "FALLING",
+    "LEVEL",
+    "FALL_RISE",
+    "RISE_FALL"
+  ],
+  "split_summary": {
+    "split_method": "Speaker-Independent Split + 5-Fold StratifiedGroupKFold",
+    "zero_speaker_leakage": true,
+    "train_val_samples": 440,
+    "train_val_speakers": 27,
+    "test_samples": 90,
+    "test_speakers": 5,
+    "total_samples": 530,
+    "total_speakers": 32,
+    "samples_per_split": {
+      "test": 90,
+      "train": 290,
+      "val": 150
+    }
+  },
+  "metrics_test": {
+    "macro_f1": 0.823,
+    "weighted_f1": 0.9377,
+    "balanced_accuracy": 0.8837,
+    "accuracy": 0.9333
+  },
+  "metrics_train_val": {
+    "train_val_macro_f1": 0.9453,
+    "cv_macro_f1": 0.8298,
+    "train_val_accuracy": 0.9636,
+    "train_test_macro_f1_gap": 0.1223
+  },
+  "overfitting_underfitting_analysis": "Model menunjukkan generalisasi yang baik pada pembicara baru (Good Fit): Train/Val Macro-F1 = 0.9453, CV Macro-F1 = 0.8298, dan Speaker-Independent Test Macro-F1 = 0.8230 (selisih +0.1223). Tidak ditemukan indikasi underfitting maupun overfitting berat.",
+  "per_class_metrics": [
+    {
+      "class_label": "RISING",
+      "precision": 0.6,
+      "recall": 0.75,
+      "f1_score": 0.6667,
+      "support_test": 4,
+      "support_train_val": 51
+    },
+    {
+      "class_label": "FALLING",
+      "precision": 0.9839,
+      "recall": 0.9683,
+      "f1_score": 0.976,
+      "support_test": 63,
+      "support_train_val": 242
+    },
+    {
+      "class_label": "LEVEL",
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1_score": 0.6667,
+      "support_test": 2,
+      "support_train_val": 26
+    },
+    {
+      "class_label": "FALL_RISE",
+      "precision": 1.0,
+      "recall": 0.8333,
+      "f1_score": 0.9091,
+      "support_test": 6,
+      "support_train_val": 53
+    },
+    {
+      "class_label": "RISE_FALL",
+      "precision": 0.9286,
+      "recall": 0.8667,
+      "f1_score": 0.8966,
+      "support_test": 15,
+      "support_train_val": 68
+    }
+  ],
+  "confusion_matrix": {
+    "labels": [
+      "RISING",
+      "FALLING",
+      "LEVEL",
+      "FALL_RISE",
+      "RISE_FALL"
+    ],
+    "matrix": [
+      [
+        3,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        61,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        5,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        13
+      ]
+    ]
+  },
+  "top_misclassifications": [
+    {
+      "true_label": "RISING",
+      "predicted_label": "RISE_FALL",
+      "count": 1
+    },
+    {
+      "true_label": "FALLING",
+      "predicted_label": "RISING",
+      "count": 1
+    },
+    {
+      "true_label": "FALLING",
+      "predicted_label": "LEVEL",
+      "count": 1
+    },
+    {
+      "true_label": "FALL_RISE",
+      "predicted_label": "RISING",
+      "count": 1
+    },
+    {
+      "true_label": "RISE_FALL",
+      "predicted_label": "FALLING",
+      "count": 1
+    }
+  ],
+  "experiment_scenarios": [
+    {
+      "scenario_name": "Baseline-1: Dummy Stratified",
+      "description": "Prediksi acak proporsional distribusi kelas",
+      "hyperparameters": "strategy='stratified'",
+      "train_macro_f1": "0.1933",
+      "cv_macro_f1": "0.2",
+      "test_macro_f1": "0.1663",
+      "test_balanced_accuracy": "0.1568",
+      "test_accuracy": "0.4778",
+      "train_accuracy": "0.3705",
+      "train_test_f1_gap": "0.027",
+      "fit_diagnosis": "Underfitting (kapasitas model terlalu sederhana)"
+    },
+    {
+      "scenario_name": "Baseline-2: Aturan Slope Sederhana",
+      "description": "Heuristik statis selisih semitone akhir-awal tanpa pembelajaran",
+      "hyperparameters": "threshold=±1.0 ST",
+      "train_macro_f1": "0.9397",
+      "cv_macro_f1": "0.9397",
+      "test_macro_f1": "0.9596",
+      "test_balanced_accuracy": "0.9667",
+      "test_accuracy": "0.9889",
+      "train_accuracy": "0.9636",
+      "train_test_f1_gap": "-0.0199",
+      "fit_diagnosis": "Good Fit / Generalisasi Baik pada Pembicara Baru"
+    },
+    {
+      "scenario_name": "Skenario-3: SVM Kernel Linear",
+      "description": "StandardScaler + SVC(kernel='linear', class_weight='balanced')",
+      "hyperparameters": "{\"svm__C\": 2.0}",
+      "train_macro_f1": "0.9482",
+      "cv_macro_f1": "0.8367",
+      "test_macro_f1": "0.7672",
+      "test_balanced_accuracy": "0.8033",
+      "test_accuracy": "0.9444",
+      "train_accuracy": "0.9659",
+      "train_test_f1_gap": "0.181",
+      "fit_diagnosis": "Indikasi Overfitting Ringan (selisih train-test > 0.18)"
+    },
+    {
+      "scenario_name": "Skenario-4: SVM Kernel Polynomial",
+      "description": "StandardScaler + SVC(kernel='poly', degree=2, class_weight='balanced')",
+      "hyperparameters": "{\"svm__C\": 2.0, \"svm__gamma\": \"scale\"}",
+      "train_macro_f1": "0.7749",
+      "cv_macro_f1": "0.6457",
+      "test_macro_f1": "0.5574",
+      "test_balanced_accuracy": "0.6544",
+      "test_accuracy": "0.8111",
+      "train_accuracy": "0.8341",
+      "train_test_f1_gap": "0.2175",
+      "fit_diagnosis": "Indikasi Overfitting Ringan (selisih train-test > 0.18)"
+    },
+    {
+      "scenario_name": "Skenario-5: SVM RBF + PCA (95% Varians)",
+      "description": "StandardScaler + PCA(0.95) + SVC(kernel='rbf', class_weight='balanced')",
+      "hyperparameters": "{\"svm__C\": 10.0, \"svm__gamma\": 0.05}",
+      "train_macro_f1": "0.9388",
+      "cv_macro_f1": "0.832",
+      "test_macro_f1": "0.8359",
+      "test_balanced_accuracy": "0.9035",
+      "test_accuracy": "0.9444",
+      "train_accuracy": "0.9568",
+      "train_test_f1_gap": "0.1029",
+      "fit_diagnosis": "Good Fit / Generalisasi Baik pada Pembicara Baru"
+    },
+    {
+      "scenario_name": "Skenario-6: SVM RBF (14 Fitur F0 + GridSearchCV)",
+      "description": "Pipeline utama StandardScaler + SVC(kernel='rbf', class_weight='balanced')",
+      "hyperparameters": "{\"svm__C\": 10.0, \"svm__gamma\": 0.05}",
+      "train_macro_f1": "0.9453",
+      "cv_macro_f1": "0.8298",
+      "test_macro_f1": "0.823",
+      "test_balanced_accuracy": "0.8837",
+      "test_accuracy": "0.9333",
+      "train_accuracy": "0.9636",
+      "train_test_f1_gap": "0.1223",
+      "fit_diagnosis": "Good Fit / Generalisasi Baik pada Pembicara Baru"
+    }
+  ],
+  "f0_reference_evaluation": {
+    "reference_dataset": "PTDB-TUG (Laryngograph RAPT Reference)",
+    "extractor_version": "f0-pyin-v1.0",
+    "evaluated_clips": 25,
+    "mean_gross_pitch_error_pct": 35.09,
+    "median_fine_pitch_error_cents": 24.65,
+    "mean_voicing_decision_error_pct": 36.9
+  },
+  "annotation_quality": {
+    "extractor_version": "f0-pyin-v1.0",
+    "feature_file": "data/features/intonation_features.csv",
+    "total_valid_consensus_phrases": 530,
+    "unique_speakers": 32,
+    "ambiguous_excluded_count": 160,
+    "insufficient_voiced_excluded_count": 4,
+    "inter_annotator_raw_agreement_pct": 77.94,
+    "inter_annotator_cohens_kappa": 0.6705,
+    "annotation_source": "AUTOMATIC_PROSODIC_CONTOUR_VALIDATED",
+    "class_distribution": {
+      "FALLING": 305,
+      "RISING": 55,
+      "RISE_FALL": 83,
+      "FALL_RISE": 59,
+      "LEVEL": 28
+    },
+    "split_distribution": {
+      "test": 90,
+      "train": 290,
+      "val": 150
+    },
+    "feature_names": [
+      "pitch_range_semitones",
+      "std_semitones",
+      "iqr_semitones",
+      "p90_minus_p10_semitones",
+      "overall_slope_st_per_sec",
+      "overall_slope_st_normalized",
+      "start_mean_st",
+      "mid_mean_st",
+      "end_mean_st",
+      "end_minus_start_st",
+      "mid_minus_start_st",
+      "end_minus_mid_st",
+      "poly2_curvature",
+      "peak_minus_valley_pos"
+    ]
+  }
+}
