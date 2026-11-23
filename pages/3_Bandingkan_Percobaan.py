@@ -17,7 +17,7 @@ st.markdown(
     <div style="margin-bottom: 20px;">
       <span class="va-header-tag">Modul 03 • Analisis Komparatif</span>
       <h1 style="margin: 0;">Komparasi Percobaan Latihan</h1>
-      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+      <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 4px;">
         Bandingkan dua rekaman latihan pada target yang sama untuk mengevaluasi konsistensi dan progres intonasi/ketepatan nada Anda.
       </p>
     </div>

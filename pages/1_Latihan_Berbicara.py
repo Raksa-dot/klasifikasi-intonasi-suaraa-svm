@@ -37,7 +37,7 @@ st.markdown(
     <div style="margin-bottom: 20px;">
       <span class="va-header-tag">Modul 01 • Pola Prosodi Ujaran</span>
       <h1 style="margin: 0;">Latihan Intonasi Berbicara</h1>
-      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+      <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 4px;">
         Evaluasi perubahan frekuensi dasar (F0) sepanjang satu frasa pendek dan klasifikasi pola intonasi dengan Support Vector Machine.
       </p>
     </div>
@@ -87,10 +87,10 @@ with col_t1:
     st.markdown(
         f"""
         <div class="va-card">
-          <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #0284c7; letter-spacing: 0.05em; margin-bottom: 4px;">Parameter Latihan Aktif</div>
-          <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Target: {target_label}</div>
-          <div style="font-size: 0.88rem; color: #334155; margin-bottom: 10px;"><strong>Frasa:</strong> &ldquo;{phrase_text}&rdquo;</div>
-          <div style="font-size: 0.82rem; color: #64748b; line-height: 1.45;"><strong>Petunjuk:</strong> {instruction_text}</div>
+          <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #38bdf8; letter-spacing: 0.05em; margin-bottom: 4px;">Parameter Latihan Aktif</div>
+          <div style="font-size: 1.1rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px;">Target: {target_label}</div>
+          <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 10px;"><strong>Frasa:</strong> &ldquo;{phrase_text}&rdquo;</div>
+          <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.45;"><strong>Petunjuk:</strong> {instruction_text}</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -222,17 +222,17 @@ if current and current.get("mode") == "SPEAKING":
             st.markdown("#### Klasifikasi Pola Intonasi (SVM)")
             if pred_res and pred_res.is_available and pred_res.predicted_label:
                 matches = pred_res.predicted_label == current["target"]
-                badge_bg = "#ecfdf5" if matches else "#fffbeb"
-                badge_border = "#a7f3d0" if matches else "#fde68a"
-                badge_text_color = "#047857" if matches else "#b45309"
+                badge_bg = "rgba(16, 185, 129, 0.12)" if matches else "rgba(245, 158, 11, 0.12)"
+                badge_border = "rgba(16, 185, 129, 0.35)" if matches else "rgba(245, 158, 11, 0.35)"
+                badge_text_color = "#34d399" if matches else "#fbbf24"
                 match_text = "Sesuai dengan Pola Target" if matches else f"Berbeda dari Target ({current['target']})"
 
                 st.markdown(
                     f"""
                     <div style="border: 1px solid {badge_border}; background: {badge_bg}; padding: 16px 20px; border-radius: 8px;">
-                      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; font-weight: 600;">Prediksi Model {pred_res.model_version}</div>
-                      <div style="font-size: 24px; font-weight: 700; color: #0f172a; margin: 4px 0;">{pred_res.predicted_label}</div>
-                      <div style="font-size: 13px; color: #334155; margin-bottom: 6px;">{LABEL_DESCRIPTIONS_ID.get(pred_res.predicted_label, '')}</div>
+                      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; font-weight: 600;">Prediksi Model {pred_res.model_version}</div>
+                      <div style="font-size: 24px; font-weight: 700; color: #f8fafc; margin: 4px 0;">{pred_res.predicted_label}</div>
+                      <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px;">{LABEL_DESCRIPTIONS_ID.get(pred_res.predicted_label, '')}</div>
                       <div style="font-size: 12px; font-weight: 600; color: {badge_text_color};">Status: {match_text}</div>
                     </div>
                     """,

@@ -34,7 +34,7 @@ st.markdown(
     <div style="margin-bottom: 20px;">
       <span class="va-header-tag">Modul 02 • Ketepatan & Kestabilan Nada</span>
       <h1 style="margin: 0;">Latihan Nada Bernyanyi</h1>
-      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+      <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 4px;">
         Dengarkan acuan nada lokal (standar A4 = {A4_REFERENCE_HZ:.0f} Hz), pertahankan vokal stabil, dan evaluasi ketepatan cents serta variasi MAD secara terpisah.
       </p>
     </div>
@@ -77,10 +77,10 @@ with col_ref1:
     st.markdown(
         f"""
         <div class="va-card">
-          <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #059669; letter-spacing: 0.05em; margin-bottom: 4px;">Target Nada Vokal</div>
-          <div style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">{target_note} ({target_hz:.2f} Hz)</div>
-          <div style="font-size: 0.88rem; color: #334155; margin-bottom: 8px;">Mode: {practice_type} • Batas Toleransi: &plusmn;{tolerance_cents:.0f} cents</div>
-          <div style="font-size: 0.82rem; color: #64748b; line-height: 1.45;"><strong>Petunjuk:</strong> {selected_ex['instruction']} Tahan nada vokal selama ~{selected_ex.get('target_duration_sec', 3.0):.0f} detik.</div>
+          <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #34d399; letter-spacing: 0.05em; margin-bottom: 4px;">Target Nada Vokal</div>
+          <div style="font-size: 1.25rem; font-weight: 700; color: #f8fafc; margin-bottom: 4px;">{target_note} ({target_hz:.2f} Hz)</div>
+          <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 8px;">Mode: {practice_type} • Batas Toleransi: &plusmn;{tolerance_cents:.0f} cents</div>
+          <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.45;"><strong>Petunjuk:</strong> {selected_ex['instruction']} Tahan nada vokal selama ~{selected_ex.get('target_duration_sec', 3.0):.0f} detik.</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -263,7 +263,7 @@ if current and current.get("mode") == "SINGING":
                 y_label="Deviasi terhadap Target (Cents)",
                 title=f"Deviasi Bertanda dalam Cents terhadap Target {summary['target_note']} (0 cents = Presisi Target)",
             )
-            fig_cents.add_hline(y=0.0, line_dash="dash", line_color="#dc2626", annotation_text="Target (0 cents)")
+            fig_cents.add_hline(y=0.0, line_dash="dash", line_color="#f43f5e", annotation_text="Target (0 cents)")
             st.plotly_chart(fig_cents)
 
             fig_wave = create_waveform_figure(

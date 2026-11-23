@@ -1,4 +1,4 @@
-"""Visualisasi grafik waveform, kontur pitch, ilustrasi panduan target, dan perbandingan percobaan dengan tema modern."""
+"""Visualisasi grafik waveform, kontur pitch, ilustrasi panduan target, dan perbandingan percobaan dengan tema Dark Mode profesional."""
 
 from typing import List, Optional
 import numpy as np
@@ -13,33 +13,33 @@ def _apply_clean_theme(
     xaxis_title: str = "",
     yaxis_title: str = "",
 ) -> go.Figure:
-    """Terapkan tema grafik minimalis, bersih, dan profesional (kontras tinggi, grid halus)."""
+    """Terapkan tema grafik Dark Mode profesional (kontras tinggi, grid gelap halus)."""
     fig.update_layout(
         title=dict(
             text=title,
-            font=dict(size=13, color="#0f172a", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
+            font=dict(size=13, color="#f8fafc", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
             x=0.01,
             xanchor="left",
         ),
         xaxis=dict(
             title=xaxis_title,
             showgrid=True,
-            gridcolor="#f1f5f9",
-            zerolinecolor="#e2e8f0",
-            tickfont=dict(size=11, color="#64748b"),
-            titlefont=dict(size=12, color="#334155"),
+            gridcolor="#1e293b",
+            zerolinecolor="#334155",
+            tickfont=dict(size=11, color="#94a3b8"),
+            titlefont=dict(size=12, color="#cbd5e1"),
         ),
         yaxis=dict(
             title=yaxis_title,
             showgrid=True,
-            gridcolor="#f1f5f9",
-            zerolinecolor="#e2e8f0",
-            tickfont=dict(size=11, color="#64748b"),
-            titlefont=dict(size=12, color="#334155"),
+            gridcolor="#1e293b",
+            zerolinecolor="#334155",
+            tickfont=dict(size=11, color="#94a3b8"),
+            titlefont=dict(size=12, color="#cbd5e1"),
         ),
-        template="plotly_white",
+        template="plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="#ffffff",
+        plot_bgcolor="#090d16",
         height=height,
         margin=dict(l=45, r=25, t=50, b=40),
         legend=dict(
@@ -48,7 +48,7 @@ def _apply_clean_theme(
             y=1.02,
             xanchor="right",
             x=1.0,
-            font=dict(size=11, color="#475569"),
+            font=dict(size=11, color="#cbd5e1"),
         ),
     )
     return fig
@@ -79,7 +79,7 @@ def create_target_guide_figure(target_label: str) -> go.Figure:
             y=y.tolist(),
             mode="lines",
             name=f"Panduan {target_label}",
-            line=dict(color="#0284c7", width=2.5, dash="dot"),
+            line=dict(color="#38bdf8", width=2.5, dash="dot"),
         )
     )
     return _apply_clean_theme(
@@ -105,7 +105,7 @@ def create_waveform_figure(samples: np.ndarray, sample_rate: int, time_offset_se
             y=y.tolist(),
             mode="lines",
             name="Amplitudo",
-            line=dict(color="#64748b", width=1.0),
+            line=dict(color="#94a3b8", width=1.0),
         )
     )
     return _apply_clean_theme(
@@ -135,8 +135,8 @@ def create_pitch_contour_figure(
             mode="lines+markers",
             name="Pitch Terdeteksi (Voiced)",
             connectgaps=False,
-            line=dict(color="#0284c7", width=2.2),
-            marker=dict(size=4, color="#0284c7"),
+            line=dict(color="#38bdf8", width=2.2),
+            marker=dict(size=4, color="#38bdf8"),
         )
     )
     if target_hz is not None and target_hz > 0:
@@ -144,11 +144,11 @@ def create_pitch_contour_figure(
         fig.add_hline(
             y=target_hz,
             line_dash="dash",
-            line_color="#dc2626",
+            line_color="#f43f5e",
             line_width=1.5,
             annotation_text=label,
             annotation_position="top left",
-            annotation_font=dict(size=11, color="#dc2626"),
+            annotation_font=dict(size=11, color="#f43f5e"),
         )
         if tolerance_cents is not None and tolerance_cents > 0:
             upper_hz = target_hz * (2.0 ** (tolerance_cents / 1200.0))
@@ -156,12 +156,12 @@ def create_pitch_contour_figure(
             fig.add_hrect(
                 y0=lower_hz,
                 y1=upper_hz,
-                fillcolor="#059669",
-                opacity=0.08,
+                fillcolor="#10b981",
+                opacity=0.12,
                 line_width=0,
                 annotation_text=f"Toleransi ±{tolerance_cents:.0f} c",
                 annotation_position="bottom right",
-                annotation_font=dict(size=10, color="#059669"),
+                annotation_font=dict(size=10, color="#10b981"),
             )
 
     return _apply_clean_theme(
@@ -207,7 +207,7 @@ def create_comparison_overlay_figure(
             mode="lines+markers",
             name=label_a,
             connectgaps=False,
-            line=dict(color="#0284c7", width=2.2),
+            line=dict(color="#38bdf8", width=2.2),
             marker=dict(size=4),
         )
     )
@@ -218,7 +218,7 @@ def create_comparison_overlay_figure(
             mode="lines+markers",
             name=label_b,
             connectgaps=False,
-            line=dict(color="#d97706", width=2.2, dash="dash"),
+            line=dict(color="#fbbf24", width=2.2, dash="dash"),
             marker=dict(size=4),
         )
     )
@@ -227,9 +227,9 @@ def create_comparison_overlay_figure(
         fig.add_hline(
             y=target_line_y,
             line_dash="dot",
-            line_color="#dc2626",
+            line_color="#f43f5e",
             annotation_text=target_line_label or "Target",
-            annotation_font=dict(size=11, color="#dc2626"),
+            annotation_font=dict(size=11, color="#f43f5e"),
         )
 
     x_title = "Durasi Ternormalisasi (%)" if normalize_time else "Waktu (detik)"
@@ -243,7 +243,7 @@ def create_comparison_overlay_figure(
 
 
 def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title: str = "Matriks Kebingungan (Confusion Matrix)") -> go.Figure:
-    """Visualisasi Confusion Matrix modern dengan palet warna Blues kontras tinggi."""
+    """Visualisasi Confusion Matrix modern Dark Mode dengan palet warna Blues kontras tinggi."""
     z = np.asarray(cm, dtype=int)
     text_vals = [[str(v) for v in row] for row in z]
     fig = go.Figure(
@@ -253,7 +253,7 @@ def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title
             y=list(labels),
             text=text_vals,
             texttemplate="%{text}",
-            textfont=dict(size=12, color="#0f172a"),
+            textfont=dict(size=12, color="#ffffff"),
             colorscale="Blues",
             showscale=False,
         )
@@ -261,22 +261,24 @@ def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title
     fig.update_layout(
         title=dict(
             text=title,
-            font=dict(size=13, color="#0f172a", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
+            font=dict(size=13, color="#f8fafc", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
             x=0.01,
             xanchor="left",
         ),
         xaxis=dict(
             title="Kelas Prediksi Model",
-            tickfont=dict(size=11, color="#334155"),
-            titlefont=dict(size=12, color="#0f172a"),
+            tickfont=dict(size=11, color="#94a3b8"),
+            titlefont=dict(size=12, color="#cbd5e1"),
         ),
         yaxis=dict(
             title="Kelas Sebenarnya (Ground Truth)",
             autorange="reversed",
-            tickfont=dict(size=11, color="#334155"),
-            titlefont=dict(size=12, color="#0f172a"),
+            tickfont=dict(size=11, color="#94a3b8"),
+            titlefont=dict(size=12, color="#cbd5e1"),
         ),
-        template="plotly_white",
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="#090d16",
         height=400,
         margin=dict(l=65, r=25, t=50, b=50),
     )

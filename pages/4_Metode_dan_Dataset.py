@@ -16,7 +16,7 @@ st.markdown(
     <div style="margin-bottom: 20px;">
       <span class="va-header-tag">Landasan Ilmiah • Siklus Pengenalan Pola</span>
       <h1 style="margin: 0;">Metodologi, Pengolahan Sinyal, dan Dataset</h1>
-      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+      <p style="color: #94a3b8; font-size: 0.95rem; margin-top: 4px;">
         Dokumentasi teoritis frekuensi dasar (F0), formulasi matematis cents, alur siklus pengenalan pola, dan ringkasan 328 berkas dataset riil.
       </p>
     </div>

@@ -9,28 +9,30 @@ from src.config import DATA_DIR, MAX_DURATION_SEC, MAX_UPLOAD_SIZE_MB, MIN_DURAT
 
 
 def inject_custom_css() -> None:
-    """Suntikkan styling antarmuka modern, tipografi bersih, dan palet warna profesional."""
+    """Suntikkan styling antarmuka modern Dark Mode profesional (palet slate gelap & cyan presisi)."""
     st.markdown(
         """
         <style>
-        /* Tipografi & Smoothing */
-        html, body, [class*="css"] {
+        /* Tipografi & Smoothing Dark Mode */
+        html, body, [class*="css"], [data-testid="stAppViewContainer"] {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            background-color: #090d16 !important;
+            color: #f1f5f9 !important;
         }
 
-        /* Hierarki Judul Elegan */
+        /* Hierarki Judul Elegan Dark */
         h1 {
             font-weight: 700 !important;
             letter-spacing: -0.03em !important;
-            color: #0f172a !important;
+            color: #f8fafc !important;
             margin-bottom: 0.35rem !important;
             font-size: 2.1rem !important;
         }
         h2 {
             font-weight: 600 !important;
             letter-spacing: -0.02em !important;
-            color: #1e293b !important;
+            color: #f1f5f9 !important;
             margin-top: 1.6rem !important;
             margin-bottom: 0.6rem !important;
             font-size: 1.35rem !important;
@@ -38,18 +40,25 @@ def inject_custom_css() -> None:
         h3 {
             font-weight: 600 !important;
             letter-spacing: -0.01em !important;
-            color: #334155 !important;
+            color: #e2e8f0 !important;
             font-size: 1.1rem !important;
         }
+        p, label, .stMarkdown p {
+            color: #cbd5e1;
+        }
 
-        /* Container Kartu Bersih */
+        /* Container Kartu Dark Slate */
         .va-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            background: #0f172a;
+            border: 1px solid #1e293b;
             border-radius: 10px;
             padding: 18px 22px;
             margin-bottom: 14px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.15s ease;
+        }
+        .va-card:hover {
+            border-color: #334155;
         }
 
         .va-header-tag {
@@ -58,78 +67,90 @@ def inject_custom_css() -> None:
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #0284c7;
-            background: #f0f9ff;
-            border: 1px solid #bae6fd;
+            color: #38bdf8 !important;
+            background: rgba(56, 189, 248, 0.12) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
             border-radius: 4px;
             padding: 2px 8px;
             margin-bottom: 8px;
         }
 
-        /* Metric Box Streamlit */
+        /* Metric Box Streamlit Dark */
         [data-testid="stMetric"] {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 12px 16px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+            background: #0f172a !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 8px !important;
+            padding: 12px 16px !important;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
         }
         [data-testid="stMetricLabel"] {
             font-size: 0.75rem !important;
             font-weight: 600 !important;
-            color: #64748b !important;
+            color: #94a3b8 !important;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         [data-testid="stMetricValue"] {
             font-size: 1.45rem !important;
             font-weight: 700 !important;
-            color: #0f172a !important;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #f8fafc !important;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
         }
 
-        /* Tombol & Aksi */
+        /* Tombol & Aksi Dark Mode */
         div.stButton > button {
             border-radius: 6px !important;
             font-weight: 500 !important;
             font-size: 0.88rem !important;
             padding: 0.4rem 1rem !important;
-            border: 1px solid #cbd5e1 !important;
-            background: #ffffff;
-            color: #334155;
+            border: 1px solid #334155 !important;
+            background: #0f172a !important;
+            color: #f1f5f9 !important;
             transition: all 0.15s ease-in-out !important;
         }
         div.stButton > button:hover {
-            border-color: #94a3b8 !important;
-            background: #f8fafc !important;
-            color: #0f172a !important;
+            border-color: #64748b !important;
+            background: #1e293b !important;
+            color: #ffffff !important;
         }
         div.stButton > button[kind="primary"] {
             background: #0284c7 !important;
-            border-color: #0284c7 !important;
+            border-color: #38bdf8 !important;
             color: #ffffff !important;
             font-weight: 600 !important;
         }
         div.stButton > button[kind="primary"]:hover {
             background: #0369a1 !important;
-            border-color: #0369a1 !important;
+            border-color: #0284c7 !important;
         }
 
-        /* Navigasi Tab */
+        /* Navigasi Tab Dark */
         .stTabs [data-baseweb="tab-list"] {
             gap: 12px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #1e293b !important;
+            background-color: transparent !important;
         }
         .stTabs [data-baseweb="tab"] {
             padding: 8px 16px;
             font-size: 0.88rem;
             font-weight: 500;
-            color: #64748b;
+            color: #94a3b8 !important;
+            background-color: transparent !important;
         }
         .stTabs [aria-selected="true"] {
-            color: #0284c7 !important;
-            border-bottom-color: #0284c7 !important;
+            color: #38bdf8 !important;
+            border-bottom-color: #38bdf8 !important;
             font-weight: 600 !important;
+        }
+
+        /* Expander & Divider Dark */
+        div[data-testid="stExpander"] {
+            border: 1px solid #1e293b !important;
+            background-color: #0f172a !important;
+            border-radius: 8px !important;
+        }
+        hr {
+            border-color: #1e293b !important;
         }
         </style>
         """,
@@ -212,7 +233,7 @@ def render_live_pitch_monitor(
       </div>
 
       <canvas id="pitchCanvas" width="760" height="130" style="width: 100%; height: 130px; background: #020617; border: 1px solid #1e293b; border-radius: 6px; display: block;"></canvas>
-      <div id="liveStatus" style="font-size: 11px; color: #64748b; margin-top: 8px;">
+      <div id="liveStatus" style="font-size: 11px; color: #94a3b8; margin-top: 8px;">
         Monitor ini memproses sinyal mikrofon langsung di browser untuk panduan vokal instan. Gunakan modul input di bawah untuk analisis matematis penuh (pyin + SVM).
       </div>
     </div>
