@@ -17,6 +17,7 @@ from src.reference_tones import synthesize_reference_tone_wav
 from src.ui_components import (
     clear_current_input_and_result,
     init_session_state,
+    inject_custom_css,
     render_live_pitch_monitor,
     render_shared_audio_input,
     save_attempt_to_session,
@@ -24,36 +25,44 @@ from src.ui_components import (
 from src.validation import validate_raw_signal
 from src.visualization import create_pitch_contour_figure, create_waveform_figure
 
-st.set_page_config(page_title="Latihan Bernyanyi — Voice Analyzer", page_icon="🎵", layout="wide")
+st.set_page_config(page_title="Latihan Bernyanyi — Voice Analyzer", page_icon="🎙️", layout="wide")
+inject_custom_css()
 init_session_state()
 
-st.title("🎵 Latihan Bernyanyi — Ikuti dan Tahan Satu Nada Acuan")
-st.write(
-    f"Pilih nada target yang nyaman bagi suara Anda (standar tuning **A4 = {A4_REFERENCE_HZ:.1f} Hz**), "
-    "dengarkan nada acuan, lalu rekam suara Anda saat mengikuti dan menahan nada tersebut."
+st.markdown(
+    f"""
+    <div style="margin-bottom: 20px;">
+      <span class="va-header-tag">Modul 02 • Ketepatan & Kestabilan Nada</span>
+      <h1 style="margin: 0;">Latihan Nada Bernyanyi</h1>
+      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+        Dengarkan acuan nada lokal (standar A4 = {A4_REFERENCE_HZ:.0f} Hz), pertahankan vokal stabil, dan evaluasi ketepatan cents serta variasi MAD secara terpisah.
+      </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 singing_exercises = load_exercises().get("singing_exercises", [])
 
 col_cfg1, col_cfg2, col_cfg3 = st.columns([2, 1, 1])
 with col_cfg1:
-    labels = [f"{ex['note_name']} — {ex['target_hz']:.2f} Hz" for ex in singing_exercises]
-    selected_idx = st.selectbox("Pilih Nada Target Latihan:", range(len(singing_exercises)), format_func=lambda i: labels[i])
+    labels = [f"{ex['note_name']} — {ex['target_hz']:.2f} Hz ({ex.get('title', '')})" for ex in singing_exercises]
+    selected_idx = st.selectbox("Pilih Nada Target:", range(len(singing_exercises)), format_func=lambda i: labels[i])
     selected_ex = singing_exercises[selected_idx]
 
 with col_cfg2:
     practice_type = st.selectbox(
-        "Jenis Latihan MVP:",
-        ["Ikuti Satu Nada", "Tahan Nada (Sustained Note)"],
+        "Kategori Latihan:",
+        ["Ikuti Satu Nada", "Tahan Nada Stabil (Sustained)"],
     )
 
 with col_cfg3:
     tolerance_cents = float(
         st.selectbox(
-            "Parameter Toleransi Latihan:",
+            "Parameter Toleransi:",
             [50, 35, 25],
             index=0,
-            format_func=lambda v: f"±{v} cents (Parameter Evaluasi)",
+            format_func=lambda v: f"±{v} cents",
         )
     )
 
@@ -61,27 +70,31 @@ target_note = selected_ex["note_name"]
 target_hz = float(selected_ex["target_hz"])
 exercise_id = f"{selected_ex['id']}_{practice_type.split()[0].lower()}"
 
-# Panel Nada Acuan Lokal
-st.markdown("### 🔊 1. Nada Acuan & Instruksi Latihan")
+# Panel Nada Acuan & Panduan
+st.markdown("### 01. Nada Acuan & Konfigurasi Target")
 col_ref1, col_ref2 = st.columns([1, 1])
 with col_ref1:
-    st.info(
-        f"**Nada Target:** `{target_note}` (**{target_hz:.2f} Hz**, tuning A4 = {A4_REFERENCE_HZ:.0f} Hz)\n\n"
-        f"**Mode Latihan:** {practice_type}\n\n"
-        f"**Instruksi:** {selected_ex['instruction']} Tahan vokal (misalnya *'aaa'* atau *'uuu'*) selama sekitar "
-        f"**{selected_ex.get('target_duration_sec', 3.0):.0f} detik**."
+    st.markdown(
+        f"""
+        <div class="va-card">
+          <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #059669; letter-spacing: 0.05em; margin-bottom: 4px;">Target Nada Vokal</div>
+          <div style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">{target_note} ({target_hz:.2f} Hz)</div>
+          <div style="font-size: 0.88rem; color: #334155; margin-bottom: 8px;">Mode: {practice_type} • Batas Toleransi: &plusmn;{tolerance_cents:.0f} cents</div>
+          <div style="font-size: 0.82rem; color: #64748b; line-height: 1.45;"><strong>Petunjuk:</strong> {selected_ex['instruction']} Tahan nada vokal selama ~{selected_ex.get('target_duration_sec', 3.0):.0f} detik.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 with col_ref2:
-    st.markdown("**Pemutar Nada Acuan (Disintesis Secara Lokal):**")
+    st.markdown("**Generator Nada Acuan Lokal (Pure Sine Wave):**")
     tone_bytes = synthesize_reference_tone_wav(target_hz, duration_sec=3.0)
     st.audio(tone_bytes, format="audio/wav")
     st.caption(
-        "⚠️ **Penting:** Hentikan pemutaran nada acuan sebelum mulai merekam, atau gunakan **headphone/earphone** "
-        "agar bunyi nada acuan dari speaker tidak ikut tertangkap oleh mikrofon."
+        "Catatan Akustik: Hentikan nada acuan sebelum merekam atau gunakan earphone agar frekuensi acuan tidak tertangkap mikrofon."
     )
 
-# Monitor Tuner Live Real-Time
-with st.expander(f"⚡ Buka Live Pitch Tuner Real-Time (Bidik Nada Target {target_note} — {target_hz:.2f} Hz)", expanded=False):
+# Monitor Tuner Real-Time
+with st.expander(f"Buka Tuner Frekuensi Waktu-Nyata (Target: {target_note} — {target_hz:.2f} Hz)", expanded=False):
     render_live_pitch_monitor(mode="SINGING", target_hz=target_hz, target_label=target_note)
 
 st.divider()
@@ -94,7 +107,7 @@ audio_bytes, filename_hint, analyze_clicked = render_shared_audio_input(
 )
 
 if analyze_clicked and audio_bytes is not None:
-    with st.spinner("Memvalidasi sinyal, mengekstraksi kontur F0, dan menghitung selisih cents serta kestabilan nada..."):
+    with st.spinner("Memvalidasi sinyal audio, mengekstraksi pitch F0, dan menghitung metrik kestabilan..."):
         try:
             raw_samples, orig_sr = read_audio_bytes(audio_bytes, filename_hint=filename_hint)
             val_res = validate_raw_signal(raw_samples, orig_sr, file_size_bytes=len(audio_bytes))
@@ -114,7 +127,6 @@ if analyze_clicked and audio_bytes is not None:
             feedback_msgs = generate_singing_feedback(summary)
             wav_play_bytes = encode_wav_bytes(pre.samples, pre.sample_rate)
 
-            # Hitung kontur selisih cents per frame untuk grafik
             cents_contour = np.full_like(contour.f0_hz, np.nan, dtype=float)
             for idx_f, f_val in enumerate(contour.f0_hz):
                 if np.isfinite(f_val) and f_val > 0:
@@ -143,14 +155,14 @@ if analyze_clicked and audio_bytes is not None:
 
             if val_res.is_valid and summary is not None:
                 att_num = save_attempt_to_session(analysis_payload)
-                st.toast(f"Hasil latihan bernyanyi disimpan sebagai Percobaan #{att_num} di sesi ini.")
+                st.toast(f"Hasil latihan tersimpan sebagai Rekaman #{att_num}.")
         except Exception as exc:
-            st.error(f"Gagal memproses file audio: {exc}")
+            st.error(f"Gagal memproses sinyal audio: {exc}")
 
 current = st.session_state.get("current_analysis")
 if current and current.get("mode") == "SINGING":
     st.divider()
-    st.markdown("### 📈 2. Hasil Analisis Latihan Bernyanyi (Ketepatan & Kestabilan Terpisah)")
+    st.markdown("### 02. Hasil Evaluasi Ketepatan & Kestabilan Vokal")
 
     val_res = current["validation"]
     summary = current["summary"]
@@ -161,55 +173,54 @@ if current and current.get("mode") == "SINGING":
             st.warning(w)
 
     if not val_res.is_valid or summary is None:
-        st.error("Rekaman belum memenuhi syarat untuk penilaian nada yang valid:")
+        st.error("Rekaman belum memenuhi syarat analisis pitch bernyanyi:")
         for reason in val_res.reasons:
             st.markdown(f"- {reason}")
         if summary is None:
             st.markdown(
-                "- Bagian suara yang memiliki pitch valid (*voiced frames*) terlalu sedikit. "
-                "Silakan merekam ulang dengan menahan nada lebih jelas."
+                "- Proporsi frame voiced tidak memadai. Silakan rekam ulang dengan menahan nada vokal secara lebih jelas."
             )
     else:
         signed_c = float(summary["median_signed_cents_error"])
         abs_c = float(summary["median_abs_cents_error"])
         mad_c = float(summary["stability_mad_cents"])
         in_tol_pct = float(summary["in_tolerance_ratio"]) * 100.0
-        direction_txt = "Lebih Tinggi (+)" if signed_c > 0.5 else ("Lebih Rendah (-)" if signed_c < -0.5 else "Tepat pada Target")
+        direction_txt = "Lebih Tinggi (+)" if signed_c > 0.5 else ("Lebih Rendah (-)" if signed_c < -0.5 else "Presisi pada Target")
 
-        # Tampilkan Ketepatan Nada dan Kestabilan Nada secara TERPISAH
+        # 4 Metrik Utama: Ketepatan vs Kestabilan Terpisah
         c1, c2, c3, c4 = st.columns(4)
         c1.metric(
-            "Nada Target vs Terdeteksi",
+            "Target vs Terdeteksi",
             f"{summary['target_note']} → {summary['detected_note']}",
-            f"Median: {summary['median_f0_hz']:.1f} Hz (Target {summary['target_hz']:.1f} Hz)",
+            f"{summary['median_f0_hz']:.1f} Hz (Target {summary['target_hz']:.1f} Hz)",
             delta_color="off",
         )
         c2.metric(
-            "Ketepatan Nada (Selisih Bertanda)",
-            f"{signed_c:+.1f} cents",
-            f"{direction_txt} | Median |Error|: {abs_c:.1f} cents",
+            "Ketepatan Nada (Cents)",
+            f"{signed_c:+.1f} c",
+            f"{direction_txt} • Abs: {abs_c:.1f} c",
             delta_color="off",
         )
         c3.metric(
-            "Kestabilan Nada (Variasi MAD)",
-            f"{mad_c:.1f} cents",
-            f"Std Segmen Inti: {summary['stability_std_cents']:.1f} cents",
+            "Kestabilan Nada (MAD)",
+            f"{mad_c:.1f} c",
+            f"Std Inti: {summary['stability_std_cents']:.1f} c",
             delta_color="off",
-            help="Median Absolute Deviation (cents) terhadap median pitch segmen itu sendiri (terpisah dari selisih terhadap target).",
+            help="Median Absolute Deviation (cents) terhadap median pitch segmen itu sendiri (terpisah dari selisih ke target).",
         )
         c4.metric(
-            f"Dalam Toleransi (±{summary['tolerance_cents']:.0f} c)",
-            f"{in_tol_pct:.1f}% frame valid",
-            f"Voiced: {summary['voiced_duration_sec']:.2f} dtk ({summary['voiced_ratio']*100:.1f}%)",
+            f"Akurasi Toleransi (±{summary['tolerance_cents']:.0f} c)",
+            f"{in_tol_pct:.1f}%",
+            f"Voiced: {summary['voiced_duration_sec']:.2f} detik",
             delta_color="off",
         )
 
-        # Grafik Kontur Pitch (Hz) dengan Garis Nada Target & Zona Toleransi
+        # Grafik Kontur Pitch (Hz) vs Garis Target
         fig_hz = create_pitch_contour_figure(
             timestamps=contour.timestamps,
             f0_values=contour.f0_hz,
-            y_label="Pitch / F0 (Hz)",
-            title=f"Kontur Pitch (Hz) vs Garis Nada Target {summary['target_note']} ({summary['target_hz']:.2f} Hz)",
+            y_label="Frekuensi Dasar F0 (Hz)",
+            title=f"Kontur Pitch F0 vs Nada Target {summary['target_note']} ({summary['target_hz']:.2f} Hz)",
             target_hz=float(summary["target_hz"]),
             target_label=f"Target {summary['target_note']} ({summary['target_hz']:.2f} Hz)",
             tolerance_cents=float(summary["tolerance_cents"]),
@@ -218,39 +229,39 @@ if current and current.get("mode") == "SINGING":
 
         col_fb1, col_fb2 = st.columns([3, 2])
         with col_fb1:
-            st.markdown("#### 💡 Saran Latihan Bernyanyi (Berdasarkan Pengukuran)")
+            st.markdown("#### Umpan Balik Latihan Bernyanyi")
             for msg in current["feedback"]:
                 st.markdown(f"- {msg}")
             st.caption(
-                "Catatan: Ketepatan nada (kedekatan terhadap target) dan kestabilan nada (variasi selama nada ditahan) "
-                "adalah dua besaran yang terpisah. Nada dapat sangat stabil sekaligus meleset dari target."
+                "Catatan Metrik: Ketepatan nada (kedekatan terhadap target) dan kestabilan nada (variasi MAD selama nada ditahan) "
+                "merupakan dua besaran terpisah. Suara dapat sangat stabil namun meleset dari target."
             )
         with col_fb2:
-            st.markdown("#### 🔄 Langkah Berikutnya")
-            if st.button("🎙️ Coba Lagi Nada Ini"):
+            st.markdown("#### Langkah Berikutnya")
+            if st.button("Ulangi Nada Ini"):
                 clear_current_input_and_result()
                 st.rerun()
             st.page_link(
                 "pages/3_Bandingkan_Percobaan.py",
-                label="📊 Bandingkan Percobaan di Sesi Ini →",
+                label="Buka Komparasi Percobaan Sesi →",
             )
 
-        with st.expander("🔬 Buka Detail Teknis (Grafik Selisih Cents per Waktu, Rentang Terdeteksi & Waveform)"):
+        with st.expander("Detail Pengukuran Selisih Cents & Karakteristik Vokal"):
             st.write(
-                f"- **Rentang Nada Terdeteksi dalam Rekaman Ini:** `{summary['lowest_note']}` (`{summary['min_f0_hz']:.2f} Hz`) "
-                f"hingga `{summary['highest_note']}` (`{summary['max_f0_hz']:.2f} Hz`). "
-                "*(Ini adalah rentang pada rekaman yang dianalisis, bukan keseluruhan kemampuan vokal Anda)*."
+                f"- **Rentang Terdeteksi:** `{summary['lowest_note']}` (`{summary['min_f0_hz']:.1f} Hz`) "
+                f"hingga `{summary['highest_note']}` (`{summary['max_f0_hz']:.1f} Hz`). "
+                "*(Rentang pada rekaman yang diuji, bukan keseluruhan jangkauan vokal biologis)*."
             )
             st.write(
-                f"- **Denominator Frame Valid:** `{summary['in_tolerance_frames']}` dari `{summary['voiced_frames']}` frame voiced "
-                f"berada dalam toleransi `±{summary['tolerance_cents']:.0f} cents` (total frame rekaman: `{summary['total_frames']}`)."
+                f"- **Cakupan Frame:** `{summary['in_tolerance_frames']}` dari `{summary['voiced_frames']}` frame voiced "
+                f"berada dalam zona toleransi `±{summary['tolerance_cents']:.0f} cents`."
             )
 
             fig_cents = create_pitch_contour_figure(
                 timestamps=contour.timestamps,
                 f0_values=current["cents_contour"],
-                y_label="Selisih terhadap Target (cents)",
-                title=f"Selisih Bertanda dalam Cents terhadap Target {summary['target_note']} (0 cents = Tepat pada Target)",
+                y_label="Deviasi terhadap Target (Cents)",
+                title=f"Deviasi Bertanda dalam Cents terhadap Target {summary['target_note']} (0 cents = Presisi Target)",
             )
             fig_cents.add_hline(y=0.0, line_dash="dash", line_color="#dc2626", annotation_text="Target (0 cents)")
             st.plotly_chart(fig_cents)

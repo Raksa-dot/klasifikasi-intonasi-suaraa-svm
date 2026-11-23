@@ -5,16 +5,24 @@ import streamlit as st
 
 from src.comparison import can_compare_attempts, summarize_attempt_comparison
 from src.export import export_attempts_list_to_csv, export_summary_to_json
-from src.ui_components import init_session_state, reset_entire_session
+from src.ui_components import init_session_state, inject_custom_css, reset_entire_session
 from src.visualization import create_comparison_overlay_figure
 
-st.set_page_config(page_title="Bandingkan Percobaan — Voice Analyzer", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Komparasi Percobaan — Voice Analyzer", page_icon="🎙️", layout="wide")
+inject_custom_css()
 init_session_state()
 
-st.title("📊 Bandingkan Percobaan Latihan")
-st.write(
-    "Bandingkan minimal dua percobaan dari **mode, latihan, dan target yang sama** dalam sesi aktif Anda, "
-    "serta unduh ringkasan hasil latihan dalam format **CSV** atau **JSON**."
+st.markdown(
+    """
+    <div style="margin-bottom: 20px;">
+      <span class="va-header-tag">Modul 03 • Analisis Komparatif</span>
+      <h1 style="margin: 0;">Komparasi Percobaan Latihan</h1>
+      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+        Bandingkan dua rekaman latihan pada target yang sama untuk mengevaluasi konsistensi dan progres intonasi/ketepatan nada Anda.
+      </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 attempts = st.session_state.get("attempts", [])

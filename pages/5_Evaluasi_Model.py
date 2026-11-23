@@ -6,14 +6,23 @@ import streamlit as st
 
 from src.config import EVALUATION_REPORT_PATH
 from src.prediction import check_intonation_model_status
+from src.ui_components import inject_custom_css
 from src.visualization import create_confusion_matrix_figure
 
-st.set_page_config(page_title="Evaluasi Model — Voice Analyzer", page_icon="🧪", layout="wide")
+st.set_page_config(page_title="Evaluasi Model — Voice Analyzer", page_icon="🎙️", layout="wide")
+inject_custom_css()
 
-st.title("🧪 Evaluasi Model SVM & Hasil Eksperimen Pengenalan Pola")
-st.write(
-    "Halaman ini menyajikan laporan evaluasi nyata dari model klasifikasi pola intonasi **Support Vector Machine (SVM)** "
-    "serta evaluasi akurasi ekstraksi $F_0$ terhadap referensi laryngograph **PTDB-TUG**."
+st.markdown(
+    """
+    <div style="margin-bottom: 20px;">
+      <span class="va-header-tag">Evaluasi Kinerja Model • Benchmark SVM</span>
+      <h1 style="margin: 0;">Evaluasi Model SVM dan Eksperimen</h1>
+      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+        Laporan empiris evaluasi model klasifikasi pola intonasi Support Vector Machine (SVM) pada data uji independen pembicara baru (0% speaker leakage).
+      </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 model_status = check_intonation_model_status()

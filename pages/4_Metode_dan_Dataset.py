@@ -6,21 +6,30 @@ import pandas as pd
 import streamlit as st
 
 from src.config import A4_REFERENCE_HZ, DATA_DIR, INTONATION_FEATURE_NAMES, INTONATION_LABELS, LABEL_DESCRIPTIONS_ID
+from src.ui_components import inject_custom_css
 
-st.set_page_config(page_title="Metode & Dataset — Voice Analyzer", page_icon="📘", layout="wide")
+st.set_page_config(page_title="Metode & Dataset — Voice Analyzer", page_icon="🎙️", layout="wide")
+inject_custom_css()
 
-st.title("📘 Metode, Siklus Pengenalan Pola, dan Dataset")
-st.write(
-    "Halaman ini menjelaskan konsep ilmiah di balik **Voice Analyzer**, cara membaca hasil latihan, "
-    "tahapan **Siklus Pengenalan Pola**, serta statistik dataset yang benar-benar terunduh dan digunakan di proyek ini."
+st.markdown(
+    """
+    <div style="margin-bottom: 20px;">
+      <span class="va-header-tag">Landasan Ilmiah • Siklus Pengenalan Pola</span>
+      <h1 style="margin: 0;">Metodologi, Pengolahan Sinyal, dan Dataset</h1>
+      <p style="color: #64748b; font-size: 0.95rem; margin-top: 4px;">
+        Dokumentasi teoritis frekuensi dasar (F0), formulasi matematis cents, alur siklus pengenalan pola, dan ringkasan 328 berkas dataset riil.
+      </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 tab1, tab2, tab3, tab4 = st.tabs(
     [
-        "📖 1. Istilah & Cara Membaca Hasil",
-        "🔄 2. Siklus Pengenalan Pola & Pipeline Audio",
-        "🗂️ 3. Sumber & Statistik Dataset Nyata",
-        "⚠️ 4. Keterbatasan & Etika Penggunaan",
+        "Konsep & Notasi Musik",
+        "Siklus Pengenalan Pola",
+        "Distribusi Dataset Terunduh",
+        "Keterbatasan & Etika Ilmiah",
     ]
 )
 

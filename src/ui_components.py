@@ -1,4 +1,4 @@
-"""Komponen UI bersama Streamlit: Input Audio (Mikrofon & Upload), Manajemen State Sesi, dan Live Pitch Monitor."""
+"""Komponen UI bersama Streamlit: Desain Minimalis Profesional, Input Audio, dan Live Instrument Tuner."""
 
 import hashlib
 from typing import Any, Dict, Optional, Tuple
@@ -6,6 +6,135 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from src.config import DATA_DIR, MAX_DURATION_SEC, MAX_UPLOAD_SIZE_MB, MIN_DURATION_SEC
+
+
+def inject_custom_css() -> None:
+    """Suntikkan styling antarmuka modern, tipografi bersih, dan palet warna profesional."""
+    st.markdown(
+        """
+        <style>
+        /* Tipografi & Smoothing */
+        html, body, [class*="css"] {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hierarki Judul Elegan */
+        h1 {
+            font-weight: 700 !important;
+            letter-spacing: -0.03em !important;
+            color: #0f172a !important;
+            margin-bottom: 0.35rem !important;
+            font-size: 2.1rem !important;
+        }
+        h2 {
+            font-weight: 600 !important;
+            letter-spacing: -0.02em !important;
+            color: #1e293b !important;
+            margin-top: 1.6rem !important;
+            margin-bottom: 0.6rem !important;
+            font-size: 1.35rem !important;
+        }
+        h3 {
+            font-weight: 600 !important;
+            letter-spacing: -0.01em !important;
+            color: #334155 !important;
+            font-size: 1.1rem !important;
+        }
+
+        /* Container Kartu Bersih */
+        .va-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+        }
+
+        .va-header-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #0284c7;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Metric Box Streamlit */
+        [data-testid="stMetric"] {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+        }
+        [data-testid="stMetricLabel"] {
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            color: #64748b !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        [data-testid="stMetricValue"] {
+            font-size: 1.45rem !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        /* Tombol & Aksi */
+        div.stButton > button {
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            font-size: 0.88rem !important;
+            padding: 0.4rem 1rem !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #ffffff;
+            color: #334155;
+            transition: all 0.15s ease-in-out !important;
+        }
+        div.stButton > button:hover {
+            border-color: #94a3b8 !important;
+            background: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        div.stButton > button[kind="primary"] {
+            background: #0284c7 !important;
+            border-color: #0284c7 !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+        }
+        div.stButton > button[kind="primary"]:hover {
+            background: #0369a1 !important;
+            border-color: #0369a1 !important;
+        }
+
+        /* Navigasi Tab */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 8px 16px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+        .stTabs [aria-selected="true"] {
+            color: #0284c7 !important;
+            border-bottom-color: #0284c7 !important;
+            font-weight: 600 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def init_session_state() -> None:
@@ -40,51 +169,51 @@ def render_live_pitch_monitor(
     target_hz: Optional[float] = None,
     target_label: str = "",
 ) -> None:
-    """Tampilkan widget Live Pitch Monitor / Tuner Real-Time berbasis Web Audio API di browser."""
+    """Tampilkan oscilloscope pitch real-time bergaya instrumen audio studio."""
     target_hz_js = f"{target_hz:.4f}" if (target_hz is not None and target_hz > 0) else "null"
     mode_title = (
-        f"Live Pitch & Pola Intonasi Monitor (Target: {target_label})"
+        f"Kontur Intonasi Waktu-Nyata (Target: {target_label})"
         if mode == "SPEAKING"
-        else f"Live Pitch Tuner Real-Time (Target: {target_label} — {target_hz:.2f} Hz)"
+        else f"Tuner Nada Waktu-Nyata (Target: {target_label} — {target_hz:.2f} Hz)"
         if target_hz
-        else "Live Pitch Monitor Real-Time"
+        else "Monitor Pitch Waktu-Nyata"
     )
 
     html_code = f"""
-    <div style="font-family: system-ui, -apple-system, sans-serif; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px; background: #f8fafc;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; border: 1px solid #1e293b; border-radius: 8px; padding: 14px 18px; background: #090d16; color: #f8fafc;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">
         <div>
-          <strong style="color: #0f172a; font-size: 15px;">⚡ {mode_title}</strong>
-          <div style="color: #475569; font-size: 12px;">Visualisasi pitch langsung di browser saat Anda bersuara di mikrofon (panduan langsung sebelum/sambil latihan).</div>
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #38bdf8; font-weight: 600;">Oscilloscope Pitch Web Audio</div>
+          <div style="color: #f1f5f9; font-size: 14px; font-weight: 600;">{mode_title}</div>
         </div>
         <div>
-          <button id="btnStartLive" style="background: #0f766e; color: white; border: none; border-radius: 6px; padding: 7px 14px; font-weight: 600; cursor: pointer; font-size: 13px;">🎙️ Mulai Monitor Live</button>
-          <button id="btnStopLive" style="background: #dc2626; color: white; border: none; border-radius: 6px; padding: 7px 14px; font-weight: 600; cursor: pointer; font-size: 13px; display: none;">⏹️ Hentikan Monitor</button>
+          <button id="btnStartLive" style="background: #0284c7; color: white; border: none; border-radius: 5px; padding: 6px 14px; font-weight: 500; cursor: pointer; font-size: 12px; letter-spacing: 0.02em;">Mulai Pemantauan</button>
+          <button id="btnStopLive" style="background: #ef4444; color: white; border: none; border-radius: 5px; padding: 6px 14px; font-weight: 500; cursor: pointer; font-size: 12px; display: none;">Hentikan</button>
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; text-align: center;">
-        <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #e2e8f0;">
-          <div style="font-size: 11px; color: #64748b;">Pitch / F0 Saat Ini</div>
-          <div id="liveHz" style="font-size: 18px; font-weight: 700; color: #0f172a;">— Hz</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px;">
+        <div style="background: #0f172a; padding: 8px 12px; border-radius: 6px; border: 1px solid #1e293b;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Frekuensi Dasar F0</div>
+          <div id="liveHz" style="font-size: 19px; font-weight: 700; color: #38bdf8; font-family: monospace;">— Hz</div>
         </div>
-        <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #e2e8f0;">
-          <div style="font-size: 11px; color: #64748b;">Nada Terdekat</div>
-          <div id="liveNote" style="font-size: 18px; font-weight: 700; color: #0f766e;">—</div>
+        <div style="background: #0f172a; padding: 8px 12px; border-radius: 6px; border: 1px solid #1e293b;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Notasi Nada</div>
+          <div id="liveNote" style="font-size: 19px; font-weight: 700; color: #34d399; font-family: monospace;">—</div>
         </div>
-        <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #e2e8f0;">
-          <div style="font-size: 11px; color: #64748b;">Selisih (Cents)</div>
-          <div id="liveCents" style="font-size: 18px; font-weight: 700; color: #2563eb;">—</div>
+        <div style="background: #0f172a; padding: 8px 12px; border-radius: 6px; border: 1px solid #1e293b;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Deviasi Cents</div>
+          <div id="liveCents" style="font-size: 19px; font-weight: 700; color: #fbbf24; font-family: monospace;">—</div>
         </div>
-        <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid #e2e8f0;">
-          <div style="font-size: 11px; color: #64748b;">Tren Kontur Live</div>
-          <div id="livePattern" style="font-size: 14px; font-weight: 700; color: #7c3aed;">Menunggu suara...</div>
+        <div style="background: #0f172a; padding: 8px 12px; border-radius: 6px; border: 1px solid #1e293b;">
+          <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Status Vokal</div>
+          <div id="livePattern" style="font-size: 13px; font-weight: 600; color: #cbd5e1; padding-top: 4px;">Menunggu input...</div>
         </div>
       </div>
 
-      <canvas id="pitchCanvas" width="760" height="145" style="width: 100%; height: 145px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;"></canvas>
-      <div id="liveStatus" style="font-size: 11px; color: #64748b; margin-top: 6px;">
-        Klik "Mulai Monitor Live" untuk melihat pergerakan pitch secara real-time, lalu gunakan perekam di bawah untuk analisis penuh Python (librosa.pyin + SVM).
+      <canvas id="pitchCanvas" width="760" height="130" style="width: 100%; height: 130px; background: #020617; border: 1px solid #1e293b; border-radius: 6px; display: block;"></canvas>
+      <div id="liveStatus" style="font-size: 11px; color: #64748b; margin-top: 8px;">
+        Monitor ini memproses sinyal mikrofon langsung di browser untuk panduan vokal instan. Gunakan modul input di bawah untuk analisis matematis penuh (pyin + SVM).
       </div>
     </div>
 
@@ -126,17 +255,18 @@ def render_live_pitch_monitor(
         for (let i = 1; i < size / 2; i++) {{
           if (Math.abs(buf[size - i]) < thres) {{ r2 = size - i; break; }}
         }}
+
         buf = buf.slice(r1, r2);
         size = buf.length;
-
-        const c = new Array(size).fill(0);
+        const c = new Float32Array(size);
         for (let i = 0; i < size; i++) {{
           for (let j = 0; j < size - i; j++) {{
             c[i] = c[i] + buf[j] * buf[j + i];
           }}
         }}
+
         let d = 0;
-        while (d < size - 1 && c[d] > c[d + 1]) d++;
+        while (c[d] > c[d + 1]) d++;
         let maxval = -1, maxpos = -1;
         for (let i = d; i < size; i++) {{
           if (c[i] > maxval) {{
@@ -146,59 +276,30 @@ def render_live_pitch_monitor(
         }}
         let T0 = maxpos;
         if (T0 <= 0) return -1;
-        const f0 = sampleRate / T0;
-        if (f0 < 65 || f0 > 950) return -1;
-        return f0;
-      }}
-
-      function estimateLiveTrend(arr) {{
-        const valid = arr.filter(v => v !== null && v > 0);
-        if (valid.length < 12) return "Mengumpulkan frame...";
-        const n = valid.length;
-        const third = Math.max(2, Math.floor(n / 3));
-        const avg = a => a.reduce((s, x) => s + x, 0) / a.length;
-        const s1 = 12 * Math.log2(avg(valid.slice(0, third)) / 220);
-        const s2 = 12 * Math.log2(avg(valid.slice(third, 2 * third)) / 220);
-        const s3 = 12 * Math.log2(avg(valid.slice(n - third)) / 220);
-        const d12 = s2 - s1;
-        const d23 = s3 - s2;
-        const d13 = s3 - s1;
-        if (d12 < -0.55 && d23 > 0.55) return "FALL_RISE (Turun→Naik)";
-        if (d12 > 0.55 && d23 < -0.55) return "RISE_FALL (Naik→Turun)";
-        if (d13 >= 0.85) return "RISING (Cenderung Naik)";
-        if (d13 <= -0.85) return "FALLING (Cenderung Turun)";
-        return "LEVEL (Relatif Datar)";
+        return sampleRate / T0;
       }}
 
       function drawCanvas() {{
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = "#f1f5f9";
+        ctx.fillStyle = "#020617";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Grid lines
+        ctx.strokeStyle = "#0f172a";
         ctx.lineWidth = 1;
-        for (let g = 1; g < 4; g++) {{
-          const y = (canvas.height / 4) * g;
+        for (let y = 20; y < canvas.height; y += 25) {{
           ctx.beginPath();
           ctx.moveTo(0, y);
           ctx.lineTo(canvas.width, y);
           ctx.stroke();
         }}
 
-        const valid = historyHz.filter(v => v !== null && v > 0);
-        if (valid.length === 0) return;
+        const minF = 70.0;
+        const maxF = 550.0;
 
-        let minF = Math.min(...valid);
-        let maxF = Math.max(...valid);
-        if (targetHz) {{
-          minF = Math.min(minF, targetHz * 0.85);
-          maxF = Math.max(maxF, targetHz * 1.15);
-        }}
-        const pad = Math.max(25, (maxF - minF) * 0.2);
-        minF = Math.max(50, minF - pad);
-        maxF = maxF + pad;
-
-        if (targetHz) {{
+        if (targetHz && targetHz >= minF && targetHz <= maxF) {{
           const ty = canvas.height - ((targetHz - minF) / (maxF - minF)) * (canvas.height - 20) - 10;
-          ctx.strokeStyle = "#dc2626";
-          ctx.setLineDash([5, 5]);
+          ctx.strokeStyle = "#ef4444";
+          ctx.setLineDash([4, 4]);
           ctx.beginPath();
           ctx.moveTo(0, ty);
           ctx.lineTo(canvas.width, ty);
@@ -206,8 +307,8 @@ def render_live_pitch_monitor(
           ctx.setLineDash([]);
         }}
 
-        ctx.strokeStyle = "#0f766e";
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = 2.2;
         ctx.beginPath();
         let started = false;
         for (let i = 0; i < historyHz.length; i++) {{
@@ -234,7 +335,7 @@ def render_live_pitch_monitor(
         analyser.getFloatTimeDomainData(buf);
         const f0 = autoCorrelate(buf, audioCtx.sampleRate);
 
-        if (f0 !== -1) {{
+        if (f0 !== -1 && f0 >= 60 && f0 <= 800) {{
           historyHz.push(f0);
           const midi = 69 + 12 * Math.log2(f0 / 440.0);
           const nearestMidi = Math.round(midi);
@@ -245,7 +346,7 @@ def render_live_pitch_monitor(
           elHz.textContent = f0.toFixed(1) + " Hz";
           elNote.textContent = noteName;
           elCents.textContent = (cents >= 0 ? "+" : "") + cents.toFixed(1) + " c";
-          elPattern.textContent = estimateLiveTrend(historyHz.slice(-45));
+          elPattern.textContent = "Sinyal Terdeteksi";
         }} else {{
           historyHz.push(null);
         }}
@@ -265,10 +366,10 @@ def render_live_pitch_monitor(
           source.connect(analyser);
           btnStart.style.display = "none";
           btnStop.style.display = "inline-block";
-          elStatus.textContent = "Mikrofon live aktif. Bersuaralah untuk melihat grafik pitch dan estimasi tren kontur secara langsung.";
+          elStatus.textContent = "Status: Pemantauan mikrofon aktif. Bersuara untuk melihat kontur.";
           updatePitch();
         }} catch (err) {{
-          elStatus.textContent = "Akses mikrofon ditolak atau tidak tersedia di browser (" + err.message + "). Gunakan opsi Unggah Audio di bawah.";
+          elStatus.textContent = "Peringatan: Izin mikrofon browser tidak aktif (" + err.message + ").";
         }}
       }});
 
@@ -279,12 +380,12 @@ def render_live_pitch_monitor(
         analyser = null;
         btnStop.style.display = "none";
         btnStart.style.display = "inline-block";
-        elStatus.textContent = "Monitor live dihentikan. Silakan rekam atau unggah audio di bawah untuk analisis penuh.";
+        elStatus.textContent = "Status: Pemantauan dihentikan.";
       }});
     }})();
     </script>
     """
-    components.html(html_code, height=315)
+    components.html(html_code, height=295)
 
 
 def render_shared_audio_input(
@@ -292,66 +393,49 @@ def render_shared_audio_input(
     exercise_id: str,
     target_key: str,
 ) -> Tuple[Optional[bytes], str, bool]:
-    """Tampilkan komponen input audio bersama (mikrofon browser, unggah file, & sampel demo) serta sinkronisasi state.
-
-    Mengembalikan (audio_bytes, filename_hint, analyze_clicked).
-    Saat audio, mode, atau target berubah, hasil analisis lama dibatalkan otomatis.
-    """
+    """Tampilkan komponen input audio bersama dengan layout profesional."""
     init_session_state()
     reset_cnt = st.session_state.get("input_reset_counter", 0)
 
-    st.markdown("#### 🎙️ Input Rekaman Audio Latihan")
+    st.markdown("### Masukan Sinyal Audio")
     st.caption(
-        f"**Batas Konfigurasi Input:** Format **WAV** (atau MP3/FLAC/OGG), durasi **{MIN_DURATION_SEC:.1f} – {MAX_DURATION_SEC:.1f} detik** "
-        f"(disesuaikan untuk satu frasa/nada latihan pendek), ukuran maksimum **{MAX_UPLOAD_SIZE_MB} MB**."
+        f"Spesifikasi: Format PCM WAV/MP3, durasi rekomendasi {MIN_DURATION_SEC:.1f} – {MAX_DURATION_SEC:.1f} detik, ukuran maks. {MAX_UPLOAD_SIZE_MB} MB."
     )
 
     tab_mic, tab_upload, tab_demo = st.tabs([
-        "🎙️ Rekam via Mikrofon Browser",
-        "📂 Unggah File Audio (WAV/MP3)",
-        "✨ Contoh Audio Uji (Demo Langsung)",
+        "Perekam Mikrofon",
+        "Unggah Berkas Audio",
+        "Sampel Rekaman Uji",
     ])
 
     audio_bytes: Optional[bytes] = None
     filename_hint = "recording.wav"
 
     with tab_mic:
-        st.markdown(
-            """
-            **Panduan Merekam Suara:**
-            1. Tekan ikon **Mikrofon** di bawah untuk memulai perekaman.
-            2. Ucapkan frasa atau nyanyikan nada sesuai instruksi target latihan.
-            3. Tekan tombol **Stop** (lingkaran merah / centang) setelah selesai merekam.
-            """
-        )
+        st.write("Tekan ikon mikrofon untuk merekam satu frasa atau nada, lalu hentikan rekaman:")
         mic_audio = st.audio_input(
-            "Perekam Suara Mikrofon Langsung:",
+            "Perekam Suara Mikrofon:",
             key=f"mic_{mode}_{reset_cnt}",
-            help="Klik ikon mikrofon untuk merekam audio langsung dari mikrofon browser Anda.",
+            help="Perekam langsung menggunakan Web Audio API browser.",
         )
         if mic_audio is not None:
             audio_bytes = mic_audio.getvalue()
             filename_hint = getattr(mic_audio, "name", "mic_recording.wav") or "mic_recording.wav"
-            st.success("✅ Rekaman mikrofon berhasil ditangkap! Dengarkan pemutar di bawah lalu klik **🔍 Analisis Rekaman Suara**.")
-        else:
-            st.info("💡 **Petunjuk Mikrofon:** Jika browser meminta izin mikrofon, pilih **Allow / Izinkan**.")
+            st.success("Sinyal rekaman berhasil ditangkap dan siap diproses.")
 
     with tab_upload:
-        st.markdown("**Unggah File Audio dari Komputer/Ponsel Anda:**")
         uploaded_file = st.file_uploader(
-            "Pilih file audio WAV (opsional MP3/FLAC/OGG):",
+            "Pilih berkas audio (WAV, MP3, FLAC, OGG):",
             type=["wav", "mp3", "flac", "ogg"],
             key=f"upload_{mode}_{reset_cnt}",
         )
         if uploaded_file is not None and audio_bytes is None:
             audio_bytes = uploaded_file.getvalue()
             filename_hint = uploaded_file.name or "uploaded.wav"
-            st.success(f"✅ File audio `{filename_hint}` ({len(audio_bytes)/1024:.1f} KB) berhasil diunggah!")
+            st.success(f"Berkas audio {filename_hint} ({len(audio_bytes)/1024:.1f} KB) siap diproses.")
 
     with tab_demo:
-        st.markdown("**Gunakan Sampel Rekaman Nyata untuk Pengujian Cepat:**")
-        st.caption("Pilihan ini sangat berguna jika Anda ingin menguji sistem analisis secara instan tanpa merekam suara.")
-
+        st.write("Pilih sampel rekaman terverifikasi dari dataset untuk pengujian langsung:")
         demo_files = []
         if mode == "SPEAKING":
             sp_dir = DATA_DIR / "raw" / "speech" / "common_voice_id"
@@ -366,13 +450,13 @@ def render_shared_audio_input(
 
         if demo_files:
             demo_idx = st.selectbox(
-                "Pilih contoh audio dari dataset:",
+                "Daftar sampel dataset:",
                 range(len(demo_files)),
                 format_func=lambda i: f"Sampel {i+1}: {demo_files[i][0]}",
                 key=f"demo_sel_{mode}_{reset_cnt}",
             )
             sel_path = demo_files[demo_idx][1]
-            if st.button("▶️ Gunakan Sampel Audio Ini Sebagai Input", key=f"btn_demo_{mode}_{reset_cnt}"):
+            if st.button("Gunakan Sampel Ini Sebagai Input", key=f"btn_demo_{mode}_{reset_cnt}"):
                 st.session_state[f"demo_audio_bytes_{mode}"] = sel_path.read_bytes()
                 st.session_state[f"demo_audio_name_{mode}"] = demo_files[demo_idx][0]
                 st.rerun()
@@ -381,36 +465,35 @@ def render_shared_audio_input(
         if demo_stored and audio_bytes is None:
             audio_bytes = demo_stored
             filename_hint = st.session_state.get(f"demo_audio_name_{mode}", "demo_audio.wav")
-            st.success(f"✅ Contoh audio `{filename_hint}` aktif sebagai input.")
+            st.success(f"Sampel uji {filename_hint} aktif sebagai masukan.")
 
-    # Buat tanda tangan unik dari (mode, exercise_id, target_key, hash(audio_bytes))
+    # Sinkronisasi state
     audio_hash = hashlib.sha256(audio_bytes).hexdigest()[:16] if audio_bytes else "no_audio"
     context_sig = f"{mode}|{exercise_id}|{target_key}|{audio_hash}"
 
-    # Batalkan hasil lama secara otomatis jika input audio, mode, atau target berubah
     if st.session_state.get("active_context_signature") != context_sig:
         st.session_state["current_analysis"] = None
         st.session_state["active_context_signature"] = context_sig
 
     if audio_bytes is not None:
-        st.markdown("**🎧 Pemutar Audio Siap Dianalisis:**")
+        st.markdown("**Audio Terpilih:**")
         st.audio(audio_bytes)
 
     col_btn1, col_btn2, col_btn3 = st.columns([2, 1, 1])
     with col_btn1:
         analyze_clicked = st.button(
-            "🔍 Analisis Rekaman Suara",
+            "Jalankan Analisis",
             type="primary",
             disabled=(audio_bytes is None),
         )
     with col_btn2:
-        if st.button("🔄 Rekam Ulang / Ganti Audio"):
+        if st.button("Rekam Ulang"):
             if f"demo_audio_bytes_{mode}" in st.session_state:
                 del st.session_state[f"demo_audio_bytes_{mode}"]
             clear_current_input_and_result()
             st.rerun()
     with col_btn3:
-        if st.button("🗑️ Reset Seluruh Sesi"):
+        if st.button("Reset Sesi"):
             if f"demo_audio_bytes_{mode}" in st.session_state:
                 del st.session_state[f"demo_audio_bytes_{mode}"]
             reset_entire_session()

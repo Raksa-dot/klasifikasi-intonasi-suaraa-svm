@@ -1,4 +1,4 @@
-"""Visualisasi grafik waveform, kontur pitch, ilustrasi panduan target, dan perbandingan percobaan."""
+"""Visualisasi grafik waveform, kontur pitch, ilustrasi panduan target, dan perbandingan percobaan dengan tema modern."""
 
 from typing import List, Optional
 import numpy as np
@@ -6,8 +6,56 @@ import pandas as pd
 import plotly.graph_objects as go
 
 
+def _apply_clean_theme(
+    fig: go.Figure,
+    title: str,
+    height: int = 360,
+    xaxis_title: str = "",
+    yaxis_title: str = "",
+) -> go.Figure:
+    """Terapkan tema grafik minimalis, bersih, dan profesional (kontras tinggi, grid halus)."""
+    fig.update_layout(
+        title=dict(
+            text=title,
+            font=dict(size=13, color="#0f172a", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
+            x=0.01,
+            xanchor="left",
+        ),
+        xaxis=dict(
+            title=xaxis_title,
+            showgrid=True,
+            gridcolor="#f1f5f9",
+            zerolinecolor="#e2e8f0",
+            tickfont=dict(size=11, color="#64748b"),
+            titlefont=dict(size=12, color="#334155"),
+        ),
+        yaxis=dict(
+            title=yaxis_title,
+            showgrid=True,
+            gridcolor="#f1f5f9",
+            zerolinecolor="#e2e8f0",
+            tickfont=dict(size=11, color="#64748b"),
+            titlefont=dict(size=12, color="#334155"),
+        ),
+        template="plotly_white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="#ffffff",
+        height=height,
+        margin=dict(l=45, r=25, t=50, b=40),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1.0,
+            font=dict(size=11, color="#475569"),
+        ),
+    )
+    return fig
+
+
 def create_target_guide_figure(target_label: str) -> go.Figure:
-    """Buat grafik ilustrasi kontur panduan untuk latihan berbicara (diberi label tegas sebagai panduan)."""
+    """Buat grafik ilustrasi kontur panduan untuk latihan berbicara."""
     t = np.linspace(0.0, 100.0, 100)
     if target_label == "RISING":
         y = -1.5 + 3.5 * (t / 100.0) ** 1.4
@@ -31,18 +79,16 @@ def create_target_guide_figure(target_label: str) -> go.Figure:
             y=y.tolist(),
             mode="lines",
             name=f"Panduan {target_label}",
-            line=dict(color="#2563eb", width=3, dash="dot"),
+            line=dict(color="#0284c7", width=2.5, dash="dot"),
         )
     )
-    fig.update_layout(
-        title=f"Ilustrasi Panduan Pola Target: {target_label} (Panduan Visual, Bukan Hasil Model)",
-        xaxis_title="Persentase Durasi Frasa (%)",
-        yaxis_title="Perubahan Pitch Relatif (Semitone Ilustratif)",
-        template="plotly_white",
-        height=260,
-        margin=dict(l=40, r=20, t=45, b=35),
+    return _apply_clean_theme(
+        fig,
+        title=f"Panduan Pola Target: {target_label} (Referensi Visual)",
+        height=240,
+        xaxis_title="Progres Frasa (%)",
+        yaxis_title="Relatif (Semitone)",
     )
-    return fig
 
 
 def create_waveform_figure(samples: np.ndarray, sample_rate: int, time_offset_sec: float = 0.0) -> go.Figure:
@@ -58,51 +104,51 @@ def create_waveform_figure(samples: np.ndarray, sample_rate: int, time_offset_se
             x=t.tolist(),
             y=y.tolist(),
             mode="lines",
-            name="Waveform",
-            line=dict(color="#475569", width=1.2),
+            name="Amplitudo",
+            line=dict(color="#64748b", width=1.0),
         )
     )
-    fig.update_layout(
-        title="Waveform Sinyal Audio",
+    return _apply_clean_theme(
+        fig,
+        title="Waveform Sinyal Audio (PCM Domain)",
+        height=200,
         xaxis_title="Waktu (detik)",
-        yaxis_title="Amplitudo",
-        template="plotly_white",
-        height=240,
-        margin=dict(l=40, r=20, t=40, b=35),
+        yaxis_title="Amplitudo Normal",
     )
-    return fig
 
 
 def create_pitch_contour_figure(
     timestamps: np.ndarray,
     f0_values: np.ndarray,
-    y_label: str = "Pitch / F0 (Hz)",
-    title: str = "Kontur Pitch terhadap Waktu",
+    y_label: str = "Frekuensi Dasar / F0 (Hz)",
+    title: str = "Kontur Pitch Sinyal Suara",
     target_hz: Optional[float] = None,
     target_label: Optional[str] = None,
     tolerance_cents: Optional[float] = None,
 ) -> go.Figure:
-    """Buat grafik kontur pitch dengan mempertahankan bagian non-voiced sebagai celah (NaN)."""
+    """Buat grafik kontur pitch dengan garis halus dan penanganan celah unvoiced."""
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
             x=np.asarray(timestamps).tolist(),
             y=np.asarray(f0_values).tolist(),
             mode="lines+markers",
-            name="Pitch Valid (Voiced)",
+            name="Pitch Terdeteksi (Voiced)",
             connectgaps=False,
-            line=dict(color="#0f766e", width=2.5),
-            marker=dict(size=5),
+            line=dict(color="#0284c7", width=2.2),
+            marker=dict(size=4, color="#0284c7"),
         )
     )
     if target_hz is not None and target_hz > 0:
-        label = target_label or f"Nada Target ({target_hz:.2f} Hz)"
+        label = target_label or f"Target: {target_hz:.1f} Hz"
         fig.add_hline(
             y=target_hz,
             line_dash="dash",
             line_color="#dc2626",
+            line_width=1.5,
             annotation_text=label,
             annotation_position="top left",
+            annotation_font=dict(size=11, color="#dc2626"),
         )
         if tolerance_cents is not None and tolerance_cents > 0:
             upper_hz = target_hz * (2.0 ** (tolerance_cents / 1200.0))
@@ -110,22 +156,21 @@ def create_pitch_contour_figure(
             fig.add_hrect(
                 y0=lower_hz,
                 y1=upper_hz,
-                fillcolor="#16a34a",
-                opacity=0.12,
+                fillcolor="#059669",
+                opacity=0.08,
                 line_width=0,
-                annotation_text=f"Zona Toleransi (±{tolerance_cents:.0f} cents)",
+                annotation_text=f"Toleransi ±{tolerance_cents:.0f} c",
                 annotation_position="bottom right",
+                annotation_font=dict(size=10, color="#059669"),
             )
 
-    fig.update_layout(
+    return _apply_clean_theme(
+        fig,
         title=title,
+        height=360,
         xaxis_title="Waktu (detik)",
         yaxis_title=y_label,
-        template="plotly_white",
-        height=380,
-        margin=dict(l=45, r=25, t=50, b=40),
     )
-    return fig
 
 
 def create_comparison_overlay_figure(
@@ -137,11 +182,11 @@ def create_comparison_overlay_figure(
     label_b: str,
     normalize_time: bool = False,
     y_label: str = "Pitch Relatif (Semitone)",
-    title: str = "Perbandingan Kontur Pitch Antarpercobaan",
+    title: str = "Perbandingan Kontur Pitch",
     target_line_y: Optional[float] = None,
     target_line_label: Optional[str] = None,
 ) -> go.Figure:
-    """Buat grafik overlay dua percobaan pada mode dan target latihan yang sama."""
+    """Buat grafik overlay dua percobaan latihan."""
     fig = go.Figure()
 
     def _prep_x(t_arr: np.ndarray) -> np.ndarray:
@@ -162,8 +207,8 @@ def create_comparison_overlay_figure(
             mode="lines+markers",
             name=label_a,
             connectgaps=False,
-            line=dict(color="#2563eb", width=2.5),
-            marker=dict(size=5, symbol="circle"),
+            line=dict(color="#0284c7", width=2.2),
+            marker=dict(size=4),
         )
     )
     fig.add_trace(
@@ -173,8 +218,8 @@ def create_comparison_overlay_figure(
             mode="lines+markers",
             name=label_b,
             connectgaps=False,
-            line=dict(color="#d97706", width=2.5, dash="dash"),
-            marker=dict(size=6, symbol="diamond"),
+            line=dict(color="#d97706", width=2.2, dash="dash"),
+            marker=dict(size=4),
         )
     )
 
@@ -184,22 +229,21 @@ def create_comparison_overlay_figure(
             line_dash="dot",
             line_color="#dc2626",
             annotation_text=target_line_label or "Target",
+            annotation_font=dict(size=11, color="#dc2626"),
         )
 
-    x_title = "Persentase Durasi Rekaman (%)" if normalize_time else "Waktu Asli (detik)"
-    fig.update_layout(
+    x_title = "Durasi Ternormalisasi (%)" if normalize_time else "Waktu (detik)"
+    return _apply_clean_theme(
+        fig,
         title=title,
+        height=380,
         xaxis_title=x_title,
         yaxis_title=y_label,
-        template="plotly_white",
-        height=400,
-        margin=dict(l=45, r=25, t=50, b=40),
     )
-    return fig
 
 
-def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title: str = "Confusion Matrix") -> go.Figure:
-    """Buat visualisasi heatmap Confusion Matrix menggunakan Plotly."""
+def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title: str = "Matriks Kebingungan (Confusion Matrix)") -> go.Figure:
+    """Visualisasi Confusion Matrix modern dengan palet warna Blues kontras tinggi."""
     z = np.asarray(cm, dtype=int)
     text_vals = [[str(v) for v in row] for row in z]
     fig = go.Figure(
@@ -209,17 +253,31 @@ def create_confusion_matrix_figure(cm: List[List[int]], labels: List[str], title
             y=list(labels),
             text=text_vals,
             texttemplate="%{text}",
+            textfont=dict(size=12, color="#0f172a"),
             colorscale="Blues",
-            showscale=True,
+            showscale=False,
         )
     )
     fig.update_layout(
-        title=title,
-        xaxis_title="Kelas Prediksi Model (Predicted Label)",
-        yaxis_title="Kelas Sebenarnya (True Label)",
-        yaxis=dict(autorange="reversed"),
+        title=dict(
+            text=title,
+            font=dict(size=13, color="#0f172a", family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"),
+            x=0.01,
+            xanchor="left",
+        ),
+        xaxis=dict(
+            title="Kelas Prediksi Model",
+            tickfont=dict(size=11, color="#334155"),
+            titlefont=dict(size=12, color="#0f172a"),
+        ),
+        yaxis=dict(
+            title="Kelas Sebenarnya (Ground Truth)",
+            autorange="reversed",
+            tickfont=dict(size=11, color="#334155"),
+            titlefont=dict(size=12, color="#0f172a"),
+        ),
         template="plotly_white",
-        height=440,
-        margin=dict(l=60, r=30, t=55, b=50),
+        height=400,
+        margin=dict(l=65, r=25, t=50, b=50),
     )
     return fig
