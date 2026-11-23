@@ -406,7 +406,10 @@ def render_live_pitch_monitor(
     }})();
     </script>
     """
-    components.html(html_code, height=295)
+    if hasattr(st, "iframe"):
+        st.iframe(html_code, height=295)
+    else:
+        components.html(html_code, height=295)
 
 
 def render_shared_audio_input(
@@ -431,7 +434,9 @@ def render_shared_audio_input(
 
     audio_bytes: Optional[bytes] = None
     filename_hint = "recording.wav"
+    source_label = ""
 
+    mic_val = None
     with tab_mic:
         st.write("Tekan ikon mikrofon untuk merekam satu frasa atau nada, lalu hentikan rekaman:")
         mic_audio = st.audio_input(
@@ -440,20 +445,27 @@ def render_shared_audio_input(
             help="Perekam langsung menggunakan Web Audio API browser.",
         )
         if mic_audio is not None:
-            audio_bytes = mic_audio.getvalue()
-            filename_hint = getattr(mic_audio, "name", "mic_recording.wav") or "mic_recording.wav"
-            st.success("Sinyal rekaman berhasil ditangkap dan siap diproses.")
+            mic_val = mic_audio.getvalue()
+            if mic_val != st.session_state.get(f"last_seen_mic_{mode}"):
+                st.session_state[f"last_seen_mic_{mode}"] = mic_val
+                st.session_state[f"active_input_type_{mode}"] = "mic"
+            st.success("Sinyal rekaman mikrofon berhasil ditangkap.")
 
+    up_val = None
+    up_name = "uploaded.wav"
     with tab_upload:
         uploaded_file = st.file_uploader(
             "Pilih berkas audio (WAV, MP3, FLAC, OGG):",
             type=["wav", "mp3", "flac", "ogg"],
             key=f"upload_{mode}_{reset_cnt}",
         )
-        if uploaded_file is not None and audio_bytes is None:
-            audio_bytes = uploaded_file.getvalue()
-            filename_hint = uploaded_file.name or "uploaded.wav"
-            st.success(f"Berkas audio {filename_hint} ({len(audio_bytes)/1024:.1f} KB) siap diproses.")
+        if uploaded_file is not None:
+            up_val = uploaded_file.getvalue()
+            up_name = uploaded_file.name or "uploaded.wav"
+            if up_val != st.session_state.get(f"last_seen_upload_{mode}"):
+                st.session_state[f"last_seen_upload_{mode}"] = up_val
+                st.session_state[f"active_input_type_{mode}"] = "upload"
+            st.success(f"Berkas audio {up_name} ({len(up_val)/1024:.1f} KB) siap diproses.")
 
     with tab_demo:
         st.write("Pilih sampel rekaman terverifikasi dari dataset untuk pengujian langsung:")
@@ -480,13 +492,42 @@ def render_shared_audio_input(
             if st.button("Gunakan Sampel Ini Sebagai Input", key=f"btn_demo_{mode}_{reset_cnt}"):
                 st.session_state[f"demo_audio_bytes_{mode}"] = sel_path.read_bytes()
                 st.session_state[f"demo_audio_name_{mode}"] = demo_files[demo_idx][0]
+                st.session_state[f"active_input_type_{mode}"] = "demo"
                 st.rerun()
 
         demo_stored = st.session_state.get(f"demo_audio_bytes_{mode}")
-        if demo_stored and audio_bytes is None:
+        demo_name = st.session_state.get(f"demo_audio_name_{mode}", "demo_audio.wav")
+        if demo_stored:
+            st.success(f"Sampel uji {demo_name} aktif sebagai masukan.")
+
+    # Tentukan sumber input audio aktif secara deterministik
+    active_type = st.session_state.get(f"active_input_type_{mode}")
+    if active_type == "demo" and demo_stored:
+        audio_bytes = demo_stored
+        filename_hint = demo_name
+        source_label = f"Sampel Uji ({demo_name})"
+    elif active_type == "upload" and up_val:
+        audio_bytes = up_val
+        filename_hint = up_name
+        source_label = f"Berkas Unggahan ({up_name})"
+    elif active_type == "mic" and mic_val:
+        audio_bytes = mic_val
+        filename_hint = getattr(mic_audio, "name", "mic_recording.wav") or "mic_recording.wav"
+        source_label = "Perekam Mikrofon"
+    else:
+        # Fallback fleksibel ke input yang tersedia
+        if mic_val is not None:
+            audio_bytes = mic_val
+            filename_hint = "mic_recording.wav"
+            source_label = "Perekam Mikrofon"
+        elif up_val is not None:
+            audio_bytes = up_val
+            filename_hint = up_name
+            source_label = f"Berkas Unggahan ({up_name})"
+        elif demo_stored is not None:
             audio_bytes = demo_stored
-            filename_hint = st.session_state.get(f"demo_audio_name_{mode}", "demo_audio.wav")
-            st.success(f"Sampel uji {filename_hint} aktif sebagai masukan.")
+            filename_hint = demo_name
+            source_label = f"Sampel Uji ({demo_name})"
 
     # Sinkronisasi state
     audio_hash = hashlib.sha256(audio_bytes).hexdigest()[:16] if audio_bytes else "no_audio"
@@ -497,7 +538,7 @@ def render_shared_audio_input(
         st.session_state["active_context_signature"] = context_sig
 
     if audio_bytes is not None:
-        st.markdown("**Audio Terpilih:**")
+        st.markdown(f"**Audio Terpilih ({source_label}):**")
         st.audio(audio_bytes)
 
     col_btn1, col_btn2, col_btn3 = st.columns([2, 1, 1])
@@ -509,14 +550,16 @@ def render_shared_audio_input(
         )
     with col_btn2:
         if st.button("Rekam Ulang"):
-            if f"demo_audio_bytes_{mode}" in st.session_state:
-                del st.session_state[f"demo_audio_bytes_{mode}"]
+            for k in (f"demo_audio_bytes_{mode}", f"active_input_type_{mode}", f"last_seen_mic_{mode}", f"last_seen_upload_{mode}"):
+                if k in st.session_state:
+                    del st.session_state[k]
             clear_current_input_and_result()
             st.rerun()
     with col_btn3:
         if st.button("Reset Sesi"):
-            if f"demo_audio_bytes_{mode}" in st.session_state:
-                del st.session_state[f"demo_audio_bytes_{mode}"]
+            for k in (f"demo_audio_bytes_{mode}", f"active_input_type_{mode}", f"last_seen_mic_{mode}", f"last_seen_upload_{mode}"):
+                if k in st.session_state:
+                    del st.session_state[k]
             reset_entire_session()
             st.rerun()
 

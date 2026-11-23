@@ -11,6 +11,9 @@ def test_model_status_and_prediction_contract() -> None:
     if status.is_ready:
         assert res.is_available
         assert res.predicted_label in INTONATION_LABELS
+        # Test in-memory cached prediction call
+        res_cached = predict_intonation_pattern(dummy_features)
+        assert res_cached.predicted_label == res.predicted_label
     else:
         assert not res.is_available
         assert res.predicted_label is None

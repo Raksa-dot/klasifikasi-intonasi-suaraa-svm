@@ -97,11 +97,11 @@ def generate_singing_feedback(summary: Optional[Dict[str, Any]]) -> List[str]:
             "Silakan merekam ulang dengan menahan vokal (mis. 'aaa') selama 2–4 detik."
         ]
 
-    signed_cents = float(summary["median_signed_cents_error"])
-    abs_cents = float(summary["median_abs_cents_error"])
-    mad_cents = float(summary["stability_mad_cents"])
-    tol_cents = float(summary["tolerance_cents"])
-    in_tol_pct = float(summary["in_tolerance_ratio"]) * 100.0
+    signed_cents = float(summary.get("median_signed_cents_error", 0.0))
+    abs_cents = float(summary.get("median_abs_cents_error", 0.0))
+    mad_cents = float(summary.get("stability_mad_cents", 0.0))
+    tol_cents = float(summary.get("tolerance_cents", 50.0))
+    in_tol_pct = float(summary.get("in_tolerance_ratio", 0.0)) * 100.0
     target_note = str(summary.get("target_note", ""))
     detected_note = str(summary.get("detected_note", ""))
 

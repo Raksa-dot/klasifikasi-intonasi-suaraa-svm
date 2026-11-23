@@ -9,8 +9,8 @@ NOTE_NAMES = ("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B")
 
 
 def hz_to_midi(frequency_hz: float, a4_hz: float = A4_REFERENCE_HZ) -> Optional[float]:
-    """Konversi frekuensi (Hz) ke nilai MIDI kontinu. Mengembalikan None jika <= 0 atau NaN."""
-    if frequency_hz is None or math.isnan(frequency_hz) or frequency_hz <= 0:
+    """Konversi frekuensi (Hz) ke nilai MIDI kontinu. Mengembalikan None jika <= 0, NaN, atau tak hingga."""
+    if frequency_hz is None or not math.isfinite(frequency_hz) or frequency_hz <= 0:
         return None
     return A4_MIDI_NUMBER + 12.0 * math.log2(frequency_hz / a4_hz)
 
@@ -39,8 +39,8 @@ def calculate_cents_error(f0_hz: float, target_hz: float) -> Optional[float]:
     if (
         f0_hz is None
         or target_hz is None
-        or math.isnan(f0_hz)
-        or math.isnan(target_hz)
+        or not math.isfinite(f0_hz)
+        or not math.isfinite(target_hz)
         or f0_hz <= 0
         or target_hz <= 0
     ):

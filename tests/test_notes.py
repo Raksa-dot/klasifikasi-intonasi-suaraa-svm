@@ -29,6 +29,12 @@ def test_signed_cents_direction() -> None:
 def test_invalid_frequencies_return_none() -> None:
     assert hz_to_midi(0.0) is None
     assert hz_to_midi(-100.0) is None
+    assert hz_to_midi(float("inf")) is None
+    assert hz_to_midi(float("-inf")) is None
     assert hz_to_note_name(0.0) is None
+    assert hz_to_note_name(float("inf")) is None
     assert calculate_cents_error(0.0, 440.0) is None
     assert calculate_cents_error(440.0, 0.0) is None
+    assert calculate_cents_error(float("inf"), 440.0) is None
+    assert calculate_cents_error(440.0, float("inf")) is None
+    assert calculate_cents_error(float("nan"), 440.0) is None

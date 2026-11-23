@@ -70,6 +70,20 @@ def check_intonation_model_status() -> ModelStatus:
     )
 
 
+_CACHED_PIPELINE: Optional[Any] = None
+_CACHED_MTIME: float = 0.0
+
+
+def _get_loaded_pipeline() -> Any:
+    """Muat model pipeline dari disk dengan in-memory caching berbasis modification time."""
+    global _CACHED_PIPELINE, _CACHED_MTIME
+    mtime = INTONATION_MODEL_PATH.stat().st_mtime
+    if _CACHED_PIPELINE is None or mtime != _CACHED_MTIME:
+        _CACHED_PIPELINE = joblib.load(INTONATION_MODEL_PATH)
+        _CACHED_MTIME = mtime
+    return _CACHED_PIPELINE
+
+
 def predict_intonation_pattern(feature_dict: Optional[Dict[str, float]]) -> PredictionResult:
     """Jalankan prediksi pola intonasi menggunakan artefak SVM yang tervalidasi."""
     if feature_dict is None:
@@ -88,7 +102,7 @@ def predict_intonation_pattern(feature_dict: Optional[Dict[str, float]]) -> Pred
         )
 
     try:
-        pipeline = joblib.load(INTONATION_MODEL_PATH)
+        pipeline = _get_loaded_pipeline()
         x_vec = np.array([[float(feature_dict[name]) for name in INTONATION_FEATURE_NAMES]], dtype=float)
         if not np.all(np.isfinite(x_vec)):
             return PredictionResult(

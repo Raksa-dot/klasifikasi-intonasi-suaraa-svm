@@ -117,8 +117,8 @@ else:
             st.success(f"✅ {reason_msg}")
 
             mode = att_a["mode"]
-            sum_a = att_a["summary"]
-            sum_b = att_b["summary"]
+            sum_a = att_a.get("summary") or {}
+            sum_b = att_b.get("summary") or {}
 
             if mode == "SPEAKING":
                 norm_axis = st.checkbox(
@@ -146,28 +146,28 @@ else:
                     [
                         {
                             "Metrik Pengukuran": "Perubahan Pitch Akhir–Awal (ST)",
-                            att_a["attempt_id"]: f"{sum_a['start_end_diff_semitones']:+.2f} ST",
-                            att_b["attempt_id"]: f"{sum_b['start_end_diff_semitones']:+.2f} ST",
+                            att_a["attempt_id"]: f"{sum_a.get('start_end_diff_semitones', 0.0):+.2f} ST",
+                            att_b["attempt_id"]: f"{sum_b.get('start_end_diff_semitones', 0.0):+.2f} ST",
                         },
                         {
                             "Metrik Pengukuran": "Rentang Pitch Valid (ST)",
-                            att_a["attempt_id"]: f"{sum_a['pitch_range_semitones']:.2f} ST",
-                            att_b["attempt_id"]: f"{sum_b['pitch_range_semitones']:.2f} ST",
+                            att_a["attempt_id"]: f"{sum_a.get('pitch_range_semitones', 0.0):.2f} ST",
+                            att_b["attempt_id"]: f"{sum_b.get('pitch_range_semitones', 0.0):.2f} ST",
                         },
                         {
                             "Metrik Pengukuran": "Kemiringan Kontur (ST/detik)",
-                            att_a["attempt_id"]: f"{sum_a['slope_semitones_per_sec']:+.2f}",
-                            att_b["attempt_id"]: f"{sum_b['slope_semitones_per_sec']:+.2f}",
+                            att_a["attempt_id"]: f"{sum_a.get('slope_semitones_per_sec', 0.0):+.2f}",
+                            att_b["attempt_id"]: f"{sum_b.get('slope_semitones_per_sec', 0.0):+.2f}",
                         },
                         {
                             "Metrik Pengukuran": "Median F0 (Hz)",
-                            att_a["attempt_id"]: f"{sum_a['median_f0_hz']:.1f} Hz ({sum_a['median_note']})",
-                            att_b["attempt_id"]: f"{sum_b['median_f0_hz']:.1f} Hz ({sum_b['median_note']})",
+                            att_a["attempt_id"]: f"{sum_a.get('median_f0_hz', 0.0):.1f} Hz ({sum_a.get('median_note', '—')})",
+                            att_b["attempt_id"]: f"{sum_b.get('median_f0_hz', 0.0):.1f} Hz ({sum_b.get('median_note', '—')})",
                         },
                         {
                             "Metrik Pengukuran": "Cakupan Suara Voiced (%)",
-                            att_a["attempt_id"]: f"{sum_a['voiced_ratio']*100:.1f}% ({sum_a['voiced_duration_sec']:.2f} dtk)",
-                            att_b["attempt_id"]: f"{sum_b['voiced_ratio']*100:.1f}% ({sum_b['voiced_duration_sec']:.2f} dtk)",
+                            att_a["attempt_id"]: f"{sum_a.get('voiced_ratio', 0.0)*100:.1f}% ({sum_a.get('voiced_duration_sec', 0.0):.2f} dtk)",
+                            att_b["attempt_id"]: f"{sum_b.get('voiced_ratio', 0.0)*100:.1f}% ({sum_b.get('voiced_duration_sec', 0.0):.2f} dtk)",
                         },
                         {
                             "Metrik Pengukuran": "Hasil Klasifikasi SVM",
@@ -199,28 +199,28 @@ else:
                     [
                         {
                             "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Bertanda (cents)",
-                            att_a["attempt_id"]: f"{sum_a['median_signed_cents_error']:+.1f} cents",
-                            att_b["attempt_id"]: f"{sum_b['median_signed_cents_error']:+.1f} cents",
+                            att_a["attempt_id"]: f"{sum_a.get('median_signed_cents_error', 0.0):+.1f} cents",
+                            att_b["attempt_id"]: f"{sum_b.get('median_signed_cents_error', 0.0):+.1f} cents",
                         },
                         {
                             "Aspek Penilaian Terpisah": "Ketepatan: Median Selisih Absolut (|cents|)",
-                            att_a["attempt_id"]: f"{sum_a['median_abs_cents_error']:.1f} cents",
-                            att_b["attempt_id"]: f"{sum_b['median_abs_cents_error']:.1f} cents",
+                            att_a["attempt_id"]: f"{sum_a.get('median_abs_cents_error', 0.0):.1f} cents",
+                            att_b["attempt_id"]: f"{sum_b.get('median_abs_cents_error', 0.0):.1f} cents",
                         },
                         {
                             "Aspek Penilaian Terpisah": "Kestabilan: Variasi MAD Segmen Inti (cents)",
-                            att_a["attempt_id"]: f"{sum_a['stability_mad_cents']:.1f} cents",
-                            att_b["attempt_id"]: f"{sum_b['stability_mad_cents']:.1f} cents",
+                            att_a["attempt_id"]: f"{sum_a.get('stability_mad_cents', 0.0):.1f} cents",
+                            att_b["attempt_id"]: f"{sum_b.get('stability_mad_cents', 0.0):.1f} cents",
                         },
                         {
-                            "Aspek Penilaian Terpisah": f"Proporsi Frame dalam Toleransi (±{sum_a['tolerance_cents']:.0f} c)",
-                            att_a["attempt_id"]: f"{sum_a['in_tolerance_ratio']*100:.1f}%",
-                            att_b["attempt_id"]: f"{sum_b['in_tolerance_ratio']*100:.1f}%",
+                            "Aspek Penilaian Terpisah": f"Proporsi Frame dalam Toleransi (±{sum_a.get('tolerance_cents', 50.0):.0f} c)",
+                            att_a["attempt_id"]: f"{sum_a.get('in_tolerance_ratio', 0.0)*100:.1f}%",
+                            att_b["attempt_id"]: f"{sum_b.get('in_tolerance_ratio', 0.0)*100:.1f}%",
                         },
                         {
                             "Aspek Penilaian Terpisah": "Cakupan Data Valid (Voiced)",
-                            att_a["attempt_id"]: f"{sum_a['voiced_duration_sec']:.2f} dtk ({sum_a['voiced_ratio']*100:.1f}%)",
-                            att_b["attempt_id"]: f"{sum_b['voiced_duration_sec']:.2f} dtk ({sum_b['voiced_ratio']*100:.1f}%)",
+                            att_a["attempt_id"]: f"{sum_a.get('voiced_duration_sec', 0.0):.2f} dtk ({sum_a.get('voiced_ratio', 0.0)*100:.1f}%)",
+                            att_b["attempt_id"]: f"{sum_b.get('voiced_duration_sec', 0.0):.2f} dtk ({sum_b.get('voiced_ratio', 0.0)*100:.1f}%)",
                         },
                     ]
                 )
